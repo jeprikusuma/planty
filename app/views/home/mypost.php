@@ -22,7 +22,7 @@
                   <p><?=$post["content"]?></p>
                 </div>
                 <div class="mt-4 d-flex justify-content-end">
-                  <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete-<?=$post["id"]?>">Delete</a>
+                  <a href="#" class="btn btn-danger" onclick="costumModalSet('danger', 'Delete', 'delete this post','<?= BASEURL;?>/Home/deletePost/<?=$post['id']?>')" data-toggle="modal" data-target="#costum-modal">Delete</a>
                 </div>
           </div>
         <?php endforeach; ?>

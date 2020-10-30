@@ -13,7 +13,7 @@ class Home extends Controller{
 			$data["posts"] = $this->model('Post_model')->searchPosts($_POST["search"]);
 			$data['search'] = $_POST["search"];
 		}else{
-			$data["posts"] = $this->model('Post_model')->allPosts();
+			$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
 		}
 		
 		$data['header'] = 'Home';

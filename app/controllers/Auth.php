@@ -9,6 +9,8 @@ class Auth extends Controller{
             $user = $this->model("User_model")->findUser($_SESSION["user"]);
             // validasi session dengan data di database
             if($user['email'] == $_SESSION["user"] && $user["password"] == $_SESSION["key"]){
+
+                
                 $role = $this->model('User_model')->getRole($_SESSION["user"]);
                 
                 // menyaiapkan session role
@@ -99,13 +101,17 @@ class Auth extends Controller{
                         // cek password
                         if(password_verify($_POST["password"], $user["password"])){
                             
-                            // jika semua kondisi terpenuhi
-                            // jika ada remember me
-                            if(isset($_POST["remember"])){
-                                Session::remember($_POST["email"], $user["password"]);
+                            if($user["isActive"] == 1){
+                                // jika semua kondisi terpenuhi
+                                // jika ada remember me
+                                if(isset($_POST["remember"])){
+                                    Session::remember($_POST["email"], $user["password"]);
+                                }
+                                Session::make($_POST["email"], $user["password"]);
+                                header('Location:'.BASEURL.'/Auth');
+                            }else{
+                                Flasher::setFlash('Account has been suspended!', 'danger');
                             }
-                            Session::make($_POST["email"], $user["password"]);
-                            header('Location:'.BASEURL.'/Auth');
 
                         }else{
                             Flasher::setFlash('Wrong password!', 'danger');
