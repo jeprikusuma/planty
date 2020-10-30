@@ -1,5 +1,6 @@
   <!-- modal -->
   <!-- modal delete -->
+  <?php if(isset($data["posts"] )) : ?>
   <?php foreach($data["posts"] as $post): ?>
   <div class="modal fade" id="delete-<?=$post["id"]?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -21,6 +22,7 @@
     </div>
   </div>
   <?php endforeach; ?>
+  <?php endif; ?>
   <!-- static modal - about -->
   <div class="modal fade" id="static-about" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -36,6 +38,26 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Costum Modal -->
+  <div class="modal fade" id="costum-modal" tabindex="-1" role="dialog" aria-labelledby="costumTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="costumTitle">Costum</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure to <span id="costumMessage">Costum</span> ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a id="costumLink" href="" class="btn text-white"></a>
         </div>
       </div>
     </div>

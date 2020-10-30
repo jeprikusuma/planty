@@ -53,6 +53,10 @@
     position: sticky;
     top: 3rem;
 }
+.aside-adm{
+    position: sticky;
+    top: 0rem;
+}
 
 @media (max-width: 768px) {
     .banner{
@@ -67,6 +71,9 @@
         height: 8rem;
     }
     .aside{
+        position: static;
+    }
+    .aside-adm{
         position: static;
     }
   }

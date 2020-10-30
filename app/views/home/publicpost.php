@@ -9,7 +9,7 @@
             <h5 class="mt-3 mb-3">Show results: <?=$data['search']?></h5>
         <?php endif; ?>
         <?php if(count($data["posts"])==0) : ?>
-            <p class="mt-5">There are no posts here...</p>
+            <p class="mt-5">There are no post here...</p>
         <?php else : ?>
         <?php foreach($data["posts"] as $post): ?>
           <div class="col-12 shadow-sm p-4 mb-4 bg-white rounded">
