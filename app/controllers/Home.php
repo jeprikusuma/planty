@@ -7,16 +7,9 @@ class Home extends Controller{
 		}
 		// menyiapkan data user
 		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
-
-		// jika search post
-		if(isset($_POST["search"])){
-			$data["posts"] = $this->model('Post_model')->searchPosts($_POST["search"]);
-			$data['search'] = $_POST["search"];
-		}else{
-			$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
-		}
-		
+		$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
 		$data['header'] = 'Home';
+		$data['nav'] = 'public';
 		// view
 		$this->view('tamplates/header', $data);
 		$this->view('home/index', $data);
@@ -24,21 +17,51 @@ class Home extends Controller{
 		$this->view('tamplates/modal', $data);
 		$this->view('tamplates/footer');
 	}
+	public function search($keyword = null){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(!isset($_POST['status'])){
+			header('Location:'.BASEURL.'/Home');
+		}
+		if($keyword){
+			$data["posts"] = $this->model('Post_model')->searchPosts($keyword);
+			$data['search'] = ($keyword);
+		}else{
+			$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
+		}
+
+		if(isset($_POST['nav'])){
+			$data['nav'] = $_POST['nav'];
+			$this->view('home/discover', $data);
+		}else{
+			$this->view('home/status', $data);
+		}		
+	}
 
 	public function mypost(){
-		if(Session::role() != 'User'){
-			header('Location:'.BASEURL.'/Auth/register');
-		}
-		// menyiapkan data user
+		$_POST = json_decode(file_get_contents('php://input'), true);
+
 		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
 		$data["posts"] = $this->model('Post_model')->postById($data['user']["id"]);
-		$data['header'] = 'Home';
-		// view
-		$this->view('tamplates/header', $data);
-		$this->view('home/index', $data);
-		$this->view('home/mypost', $data);
-		$this->view('tamplates/modal', $data);
-		$this->view('tamplates/footer');
+
+		if(!isset($_POST['status'])){
+			if(Session::role() != 'User'){
+				header('Location:'.BASEURL.'/Auth/register');
+			}
+			// menyiapkan data user
+			$data["nav"] = 'my';
+			$data['header'] = 'Home';
+			// view
+			$this->view('tamplates/header', $data);
+			$this->view('home/index', $data);
+			$this->view('home/publicpost', $data);
+			$this->view('tamplates/modal', $data);
+			$this->view('tamplates/footer');
+		}else{
+			$data["nav"] = $_POST["nav"];
+			// view
+			$this->view('home/discover', $data);
+		}
+		
 	}
 
 	public function editProfile(){
@@ -124,14 +147,15 @@ class Home extends Controller{
 
 	}
 	public function posting(){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+
 		if(!isset($_POST["posting"])){
 			header('Location:'.BASEURL.'/Home');
 		}
 
 		// validasi data
 		if(!isset($_POST["content"])){
-			Flasher::setFlash('Error on post!', 'danger');
-			header('Location:'.BASEURL.'/Home');
+			Flasher::setFlash("Can't read content on post!", 'danger');
 		}
 
 		// menyiapkan data
@@ -143,16 +167,19 @@ class Home extends Controller{
 		// redirect
 		if($insert > 0){
 			Flasher::setFlash('Your post has been published!', 'success');
-			header('Location:'.BASEURL.'/Home');
 		}else{
 			// redirect
 			Flasher::setFlash('Error on post!', 'danger');
-			header('Location:'.BASEURL.'/Home');
 		}
+
+		$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
+		$data["nav"] = "public";
+		$this->view('home/discover', $data);
 	}
 
 	public function deletePost($id){
-		if(Session::role() != 'User'){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(Session::role() != 'User' ||!isset( $_POST["delete"])){
 			header('Location:'.BASEURL.'/Auth/register');
 		}
 		// memvalidasi data
@@ -160,16 +187,19 @@ class Home extends Controller{
 		$user = $this->model('User_model')->findUser( $_SESSION["user"]);
 
 		if($post['user'] != $user['id']){
-			header('Location:'.BASEURL.'/Home');
+			header('Location:'.BASEURL.'/Auth/register');
 		}
 
 		if($this->model('Post_model')->deletePost($id) > 0 ){
 			Flasher::setFlash('Post has been deleted!', 'success');
-			header('Location:'.BASEURL.'/Home/mypost');
 		}else{
 			Flasher::setFlash('Error on deleting post!', 'danger');
-			header('Location:'.BASEURL.'/Home/mypost');
 		}
+
+		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
+		$data["posts"] = $this->model('Post_model')->postById($data['user']["id"]);
+		$data["nav"] = "my";
+		$this->view('home/status', $data);
 	}
 
 	private function upload($id, $file, $toDir, $format){

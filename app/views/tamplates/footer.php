@@ -9,6 +9,8 @@
   </script>
   <script src="<?= BASEURL;?>/js/app.js"></script>
   <script src="<?= BASEURL;?>/js/modal.js"></script>
+  <script src="<?= BASEURL;?>/js/ajax.js"></script>
+  <script src="<?= BASEURL;?>/js/adminAjax.js"></script>
 </body>
 
 </html>

@@ -17,17 +17,17 @@
       <div class="mt-5 mb-5 d-flex justify-content-center">
         <div class="col-8">
           <hr>
-          <a href="<?=BASEURL?>/Admin" class="d-flex text-dark align-items-center text-center">
+          <a href="" class="d-flex text-dark align-items-center text-center" id = "go-home">
             <i class="fas fa-home"></i>
             <p class="my-auto ml-3 text-left">Home</p>
           </a>
           <hr>
-          <a href="<?=BASEURL?>/Admin/users" class="d-flex text-dark align-items-center text-center">
+          <a href="" class="d-flex text-dark align-items-center text-center" id = "go-user">
             <i class="fas fa-user-friends"></i>
             <p class="my-auto ml-3 text-left">Users Management</p>
           </a>
           <hr>
-          <a href="<?=BASEURL?>/Admin/posts" class="d-flex text-dark align-items-center text-center">
+          <a href="" class="d-flex text-dark align-items-center text-center" id = "go-post">
             <i class="fas fa-mail-bulk"></i>
             <p class="my-auto ml-3 text-left">Posts Management</p>
           </a>
@@ -40,3 +40,7 @@
         </div>
       </div>
     </aside>
+    <div class="col-md-8 col-lg-8 col-12 container justify-content-center" id = "main-content">
+      <?php require_once("index.php") ?>
+    </main>
+  

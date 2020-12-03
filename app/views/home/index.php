@@ -25,17 +25,14 @@
       <!-- Banner areas -->
       <div class="aside col-md-4 col-lg-4 col-12 d-flex flex-column h-50">
         <!-- Aside area -->
-        <?php Flasher::flash(); ?>
-        <div class="order-3 order-md-1 order-lg-1">
-          <form action="<?=BASEURL;?>/Home/" method="post">
+        <div class="order-3 order-md-1 order-lg-1  mb-3">
           <div class="input-group">
             <!-- Search user -->
-            <input type="text" name="search" class="form-control" autocomplete="off" placeholder="Whose posts do you only want to see?" aria-describedby="basic-addon2">
+            <input type="text" name="search" id = "search" class="form-control" autocomplete="off" placeholder="Whose posts do you only want to see?" aria-describedby="basic-addon2">
             <div class="input-group-append">
-              <button type="submit" class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+              <button type="submit" id="button-search" class="btn btn-primary" type="button" onclick="searchClick()"><i class="fas fa-search"></i></button>
             </div>
           </div>
-        </form>
         </div>
         <!-- Setting area -->
         <div class="p-3 mt-4 mb-4 border rounded order-2">
@@ -71,13 +68,13 @@
         <div class="posting">
           <div class="col-12 shadow-sm p-4 mb-4 bg-white rounded">
             <!-- input -->
-              <form action="<?=BASEURL?>/Home/posting" method="post">
+              <form action="" method="post" id ="posting">
                 <div class="d-flex justify-content-between align-items-center">
                   <img src="<?= BASEURL;?>/img/users/profile/<?= $data["user"]["profile"];?>" class="photo-status rounded-circle" alt="">
-                  <input type="text" name="content" class="ml-2 form-control col-10" placeholder="What do you think?" autocomplete="off" >
+                  <input type="text" name="content" class="ml-2 form-control col-10" placeholder="What do you think?" autocomplete="off" id = "posting-status" >
                 </div>
                 <div class="mt-4 d-flex justify-content-end">
-                  <button type="submit" name="posting" class="btn btn-primary">Send</button>
+                  <button type="submit" class="btn btn-primary">Send</button>
                 </div>
             </form>
           </div>

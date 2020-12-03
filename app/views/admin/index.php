@@ -1,5 +1,4 @@
     <!-- Main Content -->
-    <div class="col-md-8 col-lg-8 col-12 container">
       <div class=" d-flex flex-column mt-4">
         <!-- user -->
         <div class="col-12 d-flex justify-content-between">
@@ -39,4 +38,4 @@
         
       </div>
     </div>
-  </main>
+ 
