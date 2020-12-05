@@ -8,6 +8,27 @@ let status = document.querySelector("#status"),
 
 const url = "http://localhost/jepri-media/public/Home/";
 
+const reloadHastag = () =>{
+    let hastags = document .querySelectorAll(".hastag");
+    if(hastags != null){
+        hastags.forEach(hastag => {
+            hastag.addEventListener("click",(e) => {
+                e.preventDefault();
+
+                fetch(e.target.href, { 
+                    method: "POST", 
+                    headers: { "Content-Type": "application/json; charset=utf-8"},
+                    body: JSON.stringify({"status" : true})
+                })
+                .then(response => response.text())
+                .then(data => {
+                    status.innerHTML = data;
+                    reloadHastag();
+                });
+            })
+        });  
+  }
+}
 
 if(posting != null){
     posting.addEventListener('submit', (e) =>{
@@ -26,6 +47,7 @@ if(posting != null){
             .then(data => {
                 postingStatus.value = "";
                 discover.innerHTML = data;
+                reloadHastag();
             });
         }
     })
@@ -45,9 +67,12 @@ if(posting != null){
             status = document.querySelector("#status");
             status.innerHTML = data;
             delate = document.querySelector("#costumLink");
+            reloadHastag();
             $('#costum-modal').modal('hide');
         });
     })
+
+    reloadHastag();
 }
 
 const searchClick = () =>{
@@ -58,7 +83,10 @@ const searchClick = () =>{
             body: JSON.stringify({"status" : true})
         })
         .then(response => response.text())
-        .then(data => status.innerHTML = data);
+        .then(data => {
+            status.innerHTML = data;
+            
+        });
     }
 
 }
@@ -76,6 +104,7 @@ const publicClick = () => {
    .then(data => {
        discover.innerHTML = data
        status = document.querySelector("#status");
+       reloadHastag();
     });
 }
 
@@ -90,6 +119,8 @@ const myClick = () => {
     })
    .then(response => response.text())
    .then(data => {
-       discover.innerHTML = data
+       discover.innerHTML = data;
+       reloadHastag();
     });
 }
+

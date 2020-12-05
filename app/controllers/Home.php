@@ -36,6 +36,31 @@ class Home extends Controller{
 			$this->view('home/status', $data);
 		}		
 	}
+	
+	public function hastag($hastag = null){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(!isset($_POST['status'])){
+			header('Location:'.BASEURL.'/Home');
+		}
+		if($hastag){
+			$hastagData = $this->model('Hastag_model')->hastagPosts($hastag);
+			$hastagData = substr($hastagData["posts"], 1, -1);
+			$hastagData=array_map('intval', explode(',', $hastagData));
+			$hastagData = implode("','",$hastagData);
+
+			$data["posts"]  = $this->model('Post_model')->multiPostsData($hastagData);
+			$data['search'] = ('#'.$hastag);
+		}else{
+			$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
+		}
+
+		if(isset($_POST['nav'])){
+			$data['nav'] = $_POST['nav'];
+			$this->view('home/discover', $data);
+		}else{
+			$this->view('home/status', $data);
+		}		
+	}
 
 	public function mypost(){
 		$_POST = json_decode(file_get_contents('php://input'), true);
@@ -152,20 +177,79 @@ class Home extends Controller{
 		if(!isset($_POST["posting"])){
 			header('Location:'.BASEURL.'/Home');
 		}
-
+		
 		// validasi data
 		if(!isset($_POST["content"])){
 			Flasher::setFlash("Can't read content on post!", 'danger');
 		}
+		// menyiapkan hastag
+		$hastag = explode(" ", $_POST["content"]);
+		$getTag = [];
+		$tagResult = [];
+		$pattern = "/[_a-z0-9-]/i"; // untuk mengecek jika ada spesial karakter pada hastag
 
+		foreach ($hastag as $tag) {
+			$getTag = explode("#", $tag);
+			if(count($getTag) > 1){
+				unset($getTag[0]);
+				foreach ($getTag as $key => $gt) {
+					if(strlen($gt) > 20){
+						$gt = substr($gt, 0, 20);
+					}
+					//cek hasil hastag
+					for($i = 0; $i < strlen($gt); $i++) {
+						if(!preg_match($pattern, $gt[$i])) {
+							$gt = substr($gt, 0, $i);
+						} 
+					} 
+					//hastag sudah siap
+					$getTag[$key] = $gt;
+					// jika kosong
+					if(strlen($getTag[$key]) < 1){
+						unset($getTag[$key]);
+					}
+				}
+
+
+				$tagResult = array_merge($tagResult, $getTag);
+			}
+		}
+		
+		//tambah link pada status/post yang dikirim
+		foreach ($tagResult as $rest) {
+			$_POST["content"] = str_replace('#'.$rest, "<a href='".BASEURL."/Home/hastag/$rest' class = 'hastag'>#$rest</a>", $_POST["content"]);
+		}
+		
+		
 		// menyiapkan data
 		$user = $this->model('User_model')->findUser( $_SESSION["user"]);
 		$_POST["user"] = $user["id"];
-		
-		// insert data
+		// insert posts
 		$insert = $this->model('Post_model')->postingPost($_POST);
+		$insert = intval($insert["LAST_INSERT_ID()"]);
+
 		// redirect
 		if($insert > 0){
+			// insert insert hastag
+			foreach ($tagResult as $hastag) {
+				$check = $this->model('Hastag_model')->checkHastag($hastag);
+				if($check){
+					// cek hari
+					date_default_timezone_set("Asia/Singapore");
+					$target= date_create($check["lastUpdate"]);
+					$origin = date_create('now');
+					$interval = date_diff($origin, $target);
+					$interval = (int)$interval->format('%a');
+
+					if($interval > 0){
+						$this->model('Hastag_model')->updateHastagPopularity($check["id"], $insert);
+					}else{
+						$this->model('Hastag_model')->updateHastag($check["id"], $insert);
+					}
+				}else{
+					$this->model('Hastag_model')->newHastag($hastag, $insert);
+				}
+			}
 			Flasher::setFlash('Your post has been published!', 'success');
 		}else{
 			// redirect
@@ -190,6 +274,10 @@ class Home extends Controller{
 			header('Location:'.BASEURL.'/Auth/register');
 		}
 
+		// delete hastag post terlebih dahulu
+		$this->model('Hastag_model')->deleteHastagPost($id);
+		$this->model('Hastag_model')->deleteEmptyHastag();
+		// delete post
 		if($this->model('Post_model')->deletePost($id) > 0 ){
 			Flasher::setFlash('Post has been deleted!', 'success');
 		}else{

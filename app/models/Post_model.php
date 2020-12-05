@@ -2,7 +2,7 @@
 
 class Post_model{
     private $table = "posts";
-	private $tableUser = "users";
+    private $tableUser = "users";
 	private $db;
 
 	public function __construct(){
@@ -14,6 +14,23 @@ class Post_model{
         $this->db->bind('id', $id);
 
  		return $this->db->single();
+    }
+
+    public function multiPostsData($arr){
+        $query = "SELECT ".$this->tableUser.".name as name, 
+                ".$this->tableUser.".profile as profile, 
+                ".$this->table.".content as content,
+                ".$this->table.".suspended as suspended,
+                ".$this->table.".id as id,
+                DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
+                    FROM `". $this->table ."`
+                    INNER JOIN ".$this->tableUser."
+                    ON ". $this->table .".user=".$this->tableUser.".id
+                    WHERE ". $this->table .".id IN ('$arr')
+                    ORDER BY ".$this->table.".upload DESC;";
+        $this->db->query($query);
+
+ 		return $this->db->resultSet();
     }
 
     public function allPosts(){
@@ -69,6 +86,7 @@ class Post_model{
 
  		return $this->db->resultSet();
     }
+
     public function searchPostsAll($keyword){
         $query = "SELECT ".$this->tableUser.".name as name, 
                         ".$this->tableUser.".profile as profile, 
@@ -107,7 +125,7 @@ class Post_model{
     public function postingPost($post){
         $query = "INSERT INTO ".$this->table.
 					" VALUES(
-						'', :content, :user, :upload, :suspended)";
+                        '', :content, :user, :upload, :suspended);";
 
         date_default_timezone_set("Asia/Singapore");
 		$this->db->query($query);
@@ -115,9 +133,12 @@ class Post_model{
         $this->db->bind('user', $post['user']);
 		$this->db->bind('upload', date('Y/m/d H:i'));
 		$this->db->bind('suspended', 0);
-		$this->db->execute();
+        $this->db->execute();
+        
+        $this->db->query("SELECT LAST_INSERT_ID();");
+        $this->db->execute();
 
-		return $this->db->rowCount();
+		return $this->db->single();
     }
     public function deletePost($id){
         $query = "DELETE FROM ". $this->table." WHERE id= :id";
@@ -178,6 +199,6 @@ class Post_model{
 		$this->db->execute();
 
 		return $this->db->rowCount();
-	}
+    }
 
 }

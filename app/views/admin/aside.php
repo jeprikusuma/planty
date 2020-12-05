@@ -1,7 +1,7 @@
   <!-- Main contents -->
   <main class="d-flex flex-column flex-lg-row flex-md-row">
     <!-- Sticky Aside -->
-    <aside class="aside-adm col-md-4 col-lg-4 col-12 bg-light">
+    <aside class="aside-adm col-md-4 col-lg-4 col-12 bg-light min-vh-100">
       <!-- profile -->
       <div class="mt-5">
         <div class="d-flex justify-content-center">
