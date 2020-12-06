@@ -16,8 +16,11 @@
                     <p class="text-secondary"><?=$post["upload"]?></p>
                   </div>
                 </div>
-                <div class="mt-4 d-flex justify-content-start">
+                <div class="mt-4 d-flex flex-column  justify-content-start">
                   <p><?=$post["content"]?></p>
+                  <div class="more<?=$post["id"]?> d-flex align-items-center">
+                   <?php require("statusmore.php")?>
+                  </div>
                 </div>
                 <?php if(isset($data["nav"])) : ?>
                 <?php if($data["nav"] == "my") : ?>

@@ -20,6 +20,12 @@
                 <div class="mt-4 d-flex justify-content-start">
                   <p><?=$post["content"]?></p>
                 </div>
+                <div class="more<?=$post["id"]?> d-flex align-items-center">
+                    <span class="mr-1"><?= count(json_decode($post["likes"], true))-1;?></span> 
+                    <i class="fas fa-heart like-done"></i>
+                    <span class="mr-1 ml-3"><?= count((array)json_decode($post["comments"], true))-1;?></span> 
+                    <i class="fas fa-comment-alt comment"></i>
+                  </div>
                 <div class="mt-4 d-flex justify-content-end">
                 <?php if($post["suspended"] == 0) : ?>
                    <a href="#" class="btn btn-warning text-white mr-1" onclick="costumModalSet('warning', 'Suspend', 'Suspend post by  <?= $post['name'] ?>','<?= BASEURL;?>/Admin/setSuspendPost/<?= $post['id'] ?>/sus')" data-toggle="modal" data-target="#costum-modal">Suspend</a>

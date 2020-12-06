@@ -7,7 +7,8 @@ class Home extends Controller{
 		}
 		// menyiapkan data user
 		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
-		$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
+		$data['posts'] = $this->model('Post_model')->postsIsSuspended(0);
+		$data['trending'] = $this->model('Hastag_model')->trendingHastag();
 		$data['header'] = 'Home';
 		$data['nav'] = 'public';
 		// view
@@ -29,6 +30,8 @@ class Home extends Controller{
 			$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
 		}
 
+		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
+
 		if(isset($_POST['nav'])){
 			$data['nav'] = $_POST['nav'];
 			$this->view('home/discover', $data);
@@ -39,7 +42,7 @@ class Home extends Controller{
 	
 	public function hastag($hastag = null){
 		$_POST = json_decode(file_get_contents('php://input'), true);
-		if(!isset($_POST['status'])){
+		if(!isset($_POST['hastag'])){
 			header('Location:'.BASEURL.'/Home');
 		}
 		if($hastag){
@@ -54,12 +57,73 @@ class Home extends Controller{
 			$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
 		}
 
+		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
+
 		if(isset($_POST['nav'])){
 			$data['nav'] = $_POST['nav'];
 			$this->view('home/discover', $data);
 		}else{
 			$this->view('home/status', $data);
 		}		
+	}
+
+	public function like(){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(!isset($_POST['status'])){
+			header('Location:'.BASEURL.'/Home');
+		}
+
+		$user= $this->model('User_model')->findUser( $_SESSION["user"]);
+		$this->model('Post_model')->postLike($_POST['like'], $user['id']);
+		$data = $this->model('Post_model')->singlePost($_POST['like']);
+		$data["user"] = $user;
+
+		$this->view('home/statusmore', $data);
+	}
+
+	public function unlike(){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(!isset($_POST['status'])){
+			header('Location:'.BASEURL.'/Home');
+		}
+
+		$user = $this->model('User_model')->findUser( $_SESSION["user"]);
+		$this->model('Post_model')->postUnlike($_POST['like'], $user['id']);
+		$data = $this->model('Post_model')->singlePost($_POST['like']);;
+
+		$data["user"] = $user;
+		$this->view('home/statusmore', $data);
+	}
+
+	public function commentArea(){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(!isset($_POST['status'])){
+			header('Location:'.BASEURL.'/Home');
+		}
+
+		$data = $this->model('Post_model')->singlePost($_POST['post']);
+		$data["user"] = $this->model('User_model')->findUser( $_SESSION["user"]);
+
+		$this->view('home/comment', $data);	
+	}
+
+	public function commentPost(){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(!isset($_POST['status'])){
+			header('Location:'.BASEURL.'/Home');
+		}
+		$user = $this->model('User_model')->findUser( $_SESSION["user"]);
+
+		$data["name"] = $user["name"];
+		$data["img"] = $user["profile"];
+		$data["comment"] = $_POST["comment"];
+		$this->model('Post_model')->postComment($_POST['post'], $data);
+
+		$data = $this->model('Post_model')->singlePost($_POST['post']);
+		$data["user"] = $user;
+
+
+		$this->view('home/comment', $data);	
 	}
 
 	public function mypost(){
@@ -256,6 +320,7 @@ class Home extends Controller{
 			Flasher::setFlash('Error on post!', 'danger');
 		}
 
+		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
 		$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
 		$data["nav"] = "public";
 		$this->view('home/discover', $data);

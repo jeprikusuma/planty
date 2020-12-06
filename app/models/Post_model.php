@@ -10,7 +10,7 @@ class Post_model{
     }
     
     public function postData($id){
-        $this->db->query("Select * FROM ".$this->table." WHERE id=:id");
+        $this->db->query("SELECT * FROM ".$this->table." WHERE id=:id");
         $this->db->bind('id', $id);
 
  		return $this->db->single();
@@ -18,10 +18,14 @@ class Post_model{
 
     public function multiPostsData($arr){
         $query = "SELECT ".$this->tableUser.".name as name, 
+                ".$this->tableUser.".id as user, 
                 ".$this->tableUser.".profile as profile, 
                 ".$this->table.".content as content,
                 ".$this->table.".suspended as suspended,
                 ".$this->table.".id as id,
+                ".$this->table.".likes as likes,
+                ".$this->table.".comments as comments,
+                ".$this->table.".comments as comments,
                 DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                     FROM `". $this->table ."`
                     INNER JOIN ".$this->tableUser."
@@ -35,10 +39,13 @@ class Post_model{
 
     public function allPosts(){
         $query = "SELECT ".$this->tableUser.".name as name, 
+                        ".$this->tableUser.".id as user, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
                         ".$this->table.".suspended as suspended,
                         ".$this->table.".id as id,
+                        ".$this->table.".likes as likes,
+                        ".$this->table.".comments as comments,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                             FROM `". $this->table ."`
                             INNER JOIN ".$this->tableUser."
@@ -51,10 +58,13 @@ class Post_model{
 
     public function postsIsSuspended($set){
         $query = "SELECT ".$this->tableUser.".name as name, 
+                        ".$this->tableUser.".id as user, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
                         ".$this->table.".suspended as suspended,
                         ".$this->table.".id as id,
+                        ".$this->table.".likes as likes,
+                        ".$this->table.".comments as comments,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                             FROM `". $this->table ."`
                             INNER JOIN ".$this->tableUser."
@@ -69,10 +79,13 @@ class Post_model{
 
     public function searchPosts($keyword){
         $query = "SELECT ".$this->tableUser.".name as name, 
+                        ".$this->tableUser.".id as user, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
                         ".$this->table.".suspended as suspended,
                         ".$this->table.".id as id,
+                        ".$this->table.".likes as likes,
+                        ".$this->table.".comments as comments,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                             FROM `". $this->table ."`
                             INNER JOIN ".$this->tableUser."
@@ -89,10 +102,13 @@ class Post_model{
 
     public function searchPostsAll($keyword){
         $query = "SELECT ".$this->tableUser.".name as name, 
+                        ".$this->tableUser.".id as user, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
                         ".$this->table.".suspended as suspended,
                         ".$this->table.".id as id,
+                        ".$this->table.".likes as likes,
+                        ".$this->table.".comments as comments,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                             FROM `". $this->table ."`
                             INNER JOIN ".$this->tableUser."
@@ -106,10 +122,12 @@ class Post_model{
     }
         
     public function postById($id){
-        $query = "SELECT ".$this->table.".id as id, 
+        $query = "SELECT ".$this->table.".id as id,
                         ".$this->tableUser.".name as name, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
+                        ".$this->table.".likes as likes,
+                        ".$this->table.".comments as comments,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                             FROM `". $this->table ."`
                             INNER JOIN ".$this->tableUser."
@@ -122,17 +140,37 @@ class Post_model{
  		return $this->db->resultSet();
     }
 
+    public function singlePost($id){
+        $query = "SELECT ".$this->table.".id as id,
+                        ".$this->tableUser.".name as name, 
+                        ".$this->tableUser.".profile as profile, 
+                        ".$this->table.".content as content,
+                        ".$this->table.".likes as likes,
+                        ".$this->table.".comments as comments,
+                        DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
+                            FROM `". $this->table ."`
+                            INNER JOIN ".$this->tableUser."
+                            ON ". $this->table .".user=".$this->tableUser.".id
+                            WHERE ".$this->table.".id=:id
+                            ORDER BY ".$this->table.".upload DESC;";
+		$this->db->query($query);
+        $this->db->bind('id', $id);
+
+ 		return $this->db->single();
+    }
+
     public function postingPost($post){
         $query = "INSERT INTO ".$this->table.
 					" VALUES(
-                        '', :content, :user, :upload, :suspended);";
+                        '', :content, :user, :upload, :suspended, JSON_ARRAY(:like), JSON_ARRAY(:like) );";
 
         date_default_timezone_set("Asia/Singapore");
 		$this->db->query($query);
 		$this->db->bind('content', $post['content']);
         $this->db->bind('user', $post['user']);
 		$this->db->bind('upload', date('Y/m/d H:i'));
-		$this->db->bind('suspended', 0);
+        $this->db->bind('suspended', 0);
+        $this->db->bind('like', 0);
         $this->db->execute();
         
         $this->db->query("SELECT LAST_INSERT_ID();");
@@ -140,6 +178,7 @@ class Post_model{
 
 		return $this->db->single();
     }
+
     public function deletePost($id){
         $query = "DELETE FROM ". $this->table." WHERE id= :id";
 
@@ -200,5 +239,48 @@ class Post_model{
 
 		return $this->db->rowCount();
     }
+    
+    public function postLike($id, $user){
+        $query = "UPDATE ".$this->table."
+                  SET likes = JSON_MERGE(likes, JSON_ARRAY(:user))
+                  WHERE id = :id AND JSON_SEARCH(likes, 'one', :user) IS NULL";
+                    
+		$this->db->query($query);
+        $this->db->bind('id', $id);
+        $this->db->bind('user', $user);
+		$this->db->execute();
 
+		return $this->db->rowCount();
+    }
+
+    public function postUnlike($id, $user){
+        $query = "UPDATE ".$this->table."
+                  SET likes = JSON_REMOVE(
+                      likes, JSON_UNQUOTE(JSON_SEARCH(likes, 'one', :user)))
+                  WHERE id = :id AND JSON_SEARCH(likes, 'one', :user) IS NOT NULL";
+                           
+		$this->db->query($query);
+        $this->db->bind('id', $id);
+        $this->db->bind('user', $user);
+		$this->db->execute();
+
+		return $this->db->rowCount();
+    }
+
+    public function postComment($id, $data){
+        $query = "UPDATE ".$this->table." 
+                 SET comments = JSON_MERGE(JSON_OBJECT('name', :name, 'img', :img, 'comment', :comment, 'upload', :upload), comments)
+                 WHERE id = :id;";
+
+        date_default_timezone_set("Asia/Singapore");
+        $this->db->query($query);
+        $this->db->bind('id', $id);
+        $this->db->bind('name', $data["name"]);
+        $this->db->bind('img', $data["img"]);
+        $this->db->bind('comment', $data["comment"]);
+        $this->db->bind('upload', date('Y/m/d H:i'));
+        $this->db->execute();
+         
+        return $this->db->rowCount();
+    }
 }

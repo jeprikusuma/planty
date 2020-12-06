@@ -115,6 +115,44 @@ class Admin extends Controller{
         }
     }
 
+    public function trending($pages = "all"){
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        if(Session::role() != 'Admin'){
+			header('Location:'.BASEURL.'/Auth/register');
+        }
+		if(!isset($_POST['aside'])){
+            header('Location:'.BASEURL.'/Admin');
+        }
+        // menyiapkan data post sesuai yang dipilih
+        switch ($pages) {
+            case 'sus':
+                $data['main'] = $this->model('Hastag_model')->suspendedHastag();
+                $data["nav"] = "sus";
+                $this->view('admin/trending-discover', $data);
+                return;
+                break;
+
+            default:
+                $data['main'] = $this->model('Hastag_model')->allHastag();
+                $data["nav"] = "def";
+                break;
+        }
+
+        // menyiapkan data user
+        $data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
+        // search post
+        if(isset($_POST["search"])){
+			$data["main"] = $this->model('Hastag_model')->searchHastag($_POST["search"]);
+            $data['search'] = $_POST["search"];
+            $data["nav"] = "def";
+            $this->view('admin/trending-discover', $data);
+		}else if(isset($_POST["nav"])){
+            $this->view('admin/trending-discover', $data);
+        }else{
+            $this->view('admin/trending', $data);
+        }
+    }
+
     public function deletePost($id){
 		$_POST = json_decode(file_get_contents('php://input'), true);
 
@@ -228,6 +266,48 @@ class Admin extends Controller{
 
         $data["nav"] = $_POST["navPosts"];
         $this->view('admin/posts-result', $data);
+    }
+
+    public function setSuspendHastag($id, $set){
+        $_POST = json_decode(file_get_contents('php://input'), true);
+
+        if(Session::role() != 'Admin'){
+			header('Location:'.BASEURL.'/Admin');
+        }
+        if(!isset($_POST['aside'])){
+            header('Location:'.BASEURL.'/Admin');
+        }
+        
+        switch ($set) {
+            case "sus":
+                if($this->model('Hastag_model')->suspend((int)$id) > 0 ){
+                    Flasher::setFlash('Data has been updated!', 'success');
+                }else{
+                    Flasher::setFlash('Error on update data!', 'danger');
+                }
+                break;
+            
+            default:
+                if($this->model('Hastag_model')->unsuspend((int)$id) > 0 ){
+                    Flasher::setFlash('Data has been updated!', 'success');
+                }else{
+                    Flasher::setFlash('Error on update data!', 'danger');
+                }
+                break;
+        }
+
+        switch ($_POST["navTrend"]){
+            case 'sus':
+                $data['main'] = $this->model('Hastag_model')->suspendedHastag();
+                break;
+
+            default:
+                $data['main'] = $this->model('Hastag_model')->allHastag();
+                break;
+        }
+
+        $data["nav"] = $_POST["navTrend"];
+        $this->view('admin/trending-result', $data);
     }
 
     public function deleteUser($id){

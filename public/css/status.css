@@ -1,0 +1,34 @@
+.like{
+    color: rgb(123, 123, 123);
+}
+
+.like:hover{
+    transition: .3s;
+    color: rgb(211, 52, 52);
+}
+
+.like-done{
+    color: rgb(211, 52, 52);
+}
+
+.comment{
+    color: rgb(123, 123, 123);
+}
+.comment:hover{
+    transition: .3s;
+    color: rgb(28, 28, 28);
+}
+.photo-comment{
+    object-fit: cover;
+    width: 2rem;
+    height: 2em;
+}
+
+.comment h5{
+    font-size: 1.1rem;
+}
+
+.comment-back{
+    font-size: 1rem;
+    margin-top: 6px;
+}

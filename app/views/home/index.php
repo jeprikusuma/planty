@@ -25,7 +25,7 @@
       <!-- Banner areas -->
       <div class="aside col-md-4 col-lg-4 col-12 d-flex flex-column h-50">
         <!-- Aside area -->
-        <div class="order-3 order-md-1 order-lg-1  mb-3">
+        <div class="order-4 order-md-1 order-lg-1  mb-3">
           <div class="input-group">
             <!-- Search user -->
             <input type="text" name="search" id = "search" class="form-control" autocomplete="off" placeholder="Whose posts do you only want to see?" aria-describedby="basic-addon2">
@@ -34,8 +34,21 @@
             </div>
           </div>
         </div>
+        <!-- Trendings area -->
+        <div class="p-3 mt-3 mb-4 border order-md-2 order-lg-2 rounded order-3">
+          <h4>Trending</h4>
+          <?php foreach($data["trending"] as $trend): ?>
+          <hr>
+          <a href="<?=BASEURL?>/Home/hastag/<?=$trend["hastag"]?>" class="trending d-flex text-dark align-items-center text-center">
+            <i class="fas fa-hashtag"></i>
+            <p class="my-auto ml-3 text-left"><?=$trend["hastag"]?>
+            <span class="small"><br><?= count(json_decode($trend["posts"], true));?> Posts</span>
+            </p>
+          </a>
+          <?php endforeach; ?>
+        </div>
         <!-- Setting area -->
-        <div class="p-3 mt-4 mb-4 border rounded order-2">
+        <div class="p-3 mt-2 mb-4 border rounded order-2">
           <h4>Setting</h4>
           <hr>
           <a href="#" class="d-flex text-dark align-items-center text-center" data-toggle="modal" data-target="#input-edit">

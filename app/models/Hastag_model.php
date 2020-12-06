@@ -20,14 +20,15 @@ class Hastag_model{
     public function newHastag($hastag, $post){
         $query = "INSERT INTO ".$this->table.
 					" VALUES(
-                        '', :hastag, :popularity, :lastUpdate, JSON_ARRAY(:post));";
+                        '', :hastag, :popularity, :lastUpdate, JSON_ARRAY(:post), :isSuspended);";
 
         date_default_timezone_set("Asia/Singapore");
 		$this->db->query($query);
 		$this->db->bind('hastag', $hastag);
         $this->db->bind('popularity', 1);
 		$this->db->bind('lastUpdate', date('Y/m/d H:i'));
-		$this->db->bind('post', $post);
+        $this->db->bind('post', $post);
+        $this->db->bind('isSuspended', 0);
         $this->db->execute();
 
         return $this->db->rowCount();
@@ -103,5 +104,75 @@ class Hastag_model{
         $this->db->execute();
 
         return $this->db->rowCount();
+    }
+
+    public function trendingHastag(){
+        $query = "SELECT * FROM ".$this->table."
+            WHERE isSuspended = 0
+            ORDER BY lastUpdate DESC, popularity DESC LIMIT 5;";
+
+        $this->db->query($query);
+        $this->db->execute();
+
+        return $this->db->resultSet();
+    }
+
+    public function allHastag(){
+        $query = "SELECT * FROM ".$this->table."
+            ORDER BY lastUpdate DESC, popularity DESC;";
+
+        $this->db->query($query);
+        $this->db->execute();
+
+        return $this->db->resultSet();
+    }
+    public function searchHastag($keyword){
+        $query = "SELECT * FROM ". $this->table ."
+                WHERE (hastag LIKE CONCAT('%', :keyword , '%'))
+                ORDER BY lastUpdate DESC, popularity DESC;";
+
+		$this->db->query($query);
+        $this->db->bind('keyword', $keyword);
+        $this->db->execute();
+
+ 		return $this->db->resultSet();
+    }
+
+    public function suspendedHastag(){
+        $query = "SELECT * FROM ". $this->table ."
+                WHERE isSuspended = :suspended
+                ORDER BY lastUpdate DESC, popularity DESC;";
+
+        $this->db->query($query);
+        $this->db->bind('suspended', 1);
+        $this->db->execute();
+
+ 		return $this->db->resultSet();
+    }
+
+    public function suspend($id){
+		$query = "UPDATE ".$this->table."
+					SET isSuspended = :suspended
+                    WHERE id =:id;";
+                    
+		$this->db->query($query);
+        $this->db->bind('id', $id);
+        $this->db->bind('suspended', 1);
+		$this->db->execute();
+
+		return $this->db->rowCount();
+	}
+
+	public function unsuspend($id){
+		$query = "UPDATE ".$this->table."
+					SET isSuspended = :suspended
+                    WHERE id =:id;";
+                    
+		$this->db->query($query);
+        $this->db->bind('id', $id);
+        $this->db->bind('suspended', 0);
+		$this->db->execute();
+
+		return $this->db->rowCount();
     }
 }

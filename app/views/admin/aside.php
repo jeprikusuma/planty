@@ -24,12 +24,17 @@
           <hr>
           <a href="" class="d-flex text-dark align-items-center text-center" id = "go-user">
             <i class="fas fa-user-friends"></i>
-            <p class="my-auto ml-3 text-left">Users Management</p>
+            <p class="my-auto ml-3 text-left">Users</p>
           </a>
           <hr>
           <a href="" class="d-flex text-dark align-items-center text-center" id = "go-post">
             <i class="fas fa-mail-bulk"></i>
-            <p class="my-auto ml-3 text-left">Posts Management</p>
+            <p class="my-auto ml-3 text-left">Posts</p>
+          </a>
+          <hr>
+          <a href="" class="d-flex text-dark align-items-center text-center" id = "go-trending">
+             <i class="fas fa-hashtag"></i>
+            <p class="my-auto ml-3 text-left">Trending</p>
           </a>
           <hr>
           <a href="#" class="d-flex align-items-center text-danger text-center" data-toggle="modal" data-target="#single-logout">
