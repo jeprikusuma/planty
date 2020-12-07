@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2020 at 04:56 PM
+-- Generation Time: Dec 07, 2020 at 02:40 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -32,22 +32,47 @@ CREATE TABLE `posts` (
   `content` varchar(500) NOT NULL,
   `user` int(11) NOT NULL,
   `upload` datetime NOT NULL,
-  `suspended` int(11) NOT NULL
+  `suspended` int(11) NOT NULL,
+  `likes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`likes`)),
+  `comments` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`comments`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `content`, `user`, `upload`, `suspended`) VALUES
-(8, 'Have a nice dream everyone :)', 6, '2020-10-18 02:35:00', 0),
-(15, 'jepri upload this post', 2, '2020-10-28 23:32:00', 1),
-(18, '“Renew, release, let go. Yesterday’s gone. There’s nothing you can do to bring it back. You can’t “should’ve” done something. You can only DO something. Renew yourself. Release that attachment. Today is a new day!”', 6, '2020-10-30 15:49:00', 0),
-(19, '“Today is the sort of day where the sun only comes up to humiliate you.”', 10, '2020-10-30 15:51:00', 0),
-(20, 'Hy i\'m from Indonesia', 11, '2020-10-30 15:53:00', 0),
-(21, 'Huhuhuu dark side', 12, '2020-10-30 15:54:00', 0),
-(24, '“The beginning is always today.”', 13, '2020-10-30 16:09:00', 0),
-(25, '“The best preparation for tomorrow is doing your best today.”', 13, '2020-10-30 16:09:00', 0);
+INSERT INTO `posts` (`id`, `content`, `user`, `upload`, `suspended`, `likes`, `comments`) VALUES
+(120, 'Harapan di awal tahun nanti apa hayoo? <a href=\'http://localhost/jepri-media/public/Home/hastag/desember\' class = \'hastag\'>#desember</a> <a href=\'http://localhost/jepri-media/public/Home/hastag/resolusibaru\' class = \'hastag\'>#resolusibaru</a>', 2, '2020-12-07 00:38:00', 0, '[0, \"2\", \"6\"]', '[{\"name\": \"Putu Tiara Widiastini\", \"img\": \"16029597546.jpeg\", \"comment\": \"hihi\", \"upload\": \"2020/12/07 02:08\"}, {\"name\": \"Komang Jepri Kusuma Jaya\", \"img\": \"16030086632.jpeg\", \"comment\": \"Mau juga diatas wkwk\", \"upload\": \"2020/12/07 00:45\"}, {\"name\": \"Komang Jepri Kusuma Jaya\", \"img\": \"16030086632.jpeg\", \"comment\": \"test\", \"upload\": \"2020/12/07 00:45\"}, 0, {\"name\": \"Komang Jepri Kusuma Jaya\", \"img\": \"16030086632.jpeg\", \"comment\": \"Yuk komen komen wkwk\", \"upload\": \"2020/12/07 00:38\"}, {\"name\": \"Komang Jepri Kusuma Jaya\", \"img\": \"16030086632.jpeg\", \"comment\": \"wkwk\", \"upload\": \"2020/12/07 00:39\"}, {\"name\": \"Komang Jepri Kusuma Jaya\", \"img\": \"16030086632.jpeg\", \"comment\": \"huh\", \"upload\": \"2020/12/07 00:40\"}]'),
+(122, '2021 : Covid-19 hilang <a href=\'http://localhost/jepri-media/public/Home/hastag/2021\' class = \'hastag\'>#2021</a> <a href=\'http://localhost/jepri-media/public/Home/hastag/resolusibaru\' class = \'hastag\'>#resolusibaru</a> <a href=\'http://localhost/jepri-media/public/Home/hastag/covid19\' class = \'hastag\'>#covid19</a>', 6, '2020-12-07 02:10:00', 0, '[0, \"6\", \"20\"]', '[{\"name\": \"Rio Ariawan\", \"img\": \"default-male.png\", \"comment\": \"Astunkara😊\", \"upload\": \"2020/12/07 02:12\"}, 0]'),
+(124, '\"Knowledge cannot replace friendship, I\'d rather be an idiot than lose you. \" - Patrick Star', 20, '2020-12-07 02:14:00', 0, '[0, \"20\"]', '[0]'),
+(125, '\"The best leaders are those most interested in surrounding themselves with assistants and associates smarter than they are. They are frank in admitting this and are willing to pay for such talents.\" -Antos Parrish', 20, '2020-12-07 02:16:00', 0, '[0, \"20\"]', '[0]'),
+(126, '<a href=\'http://localhost/jepri-media/public/Home/hastag/2021\' class = \'hastag\'>#2021</a> jadi dosen 😂 <a href=\'http://localhost/jepri-media/public/Home/hastag/resolusibaru\' class = \'hastag\'>#resolusibaru</a>', 13, '2020-12-07 02:19:00', 0, '[0, \"2\"]', '[{\"name\": \"Komang Jepri Kusuma Jaya\", \"img\": \"16030086632.jpeg\", \"comment\": \"Amin zas\", \"upload\": \"2020/12/07 09:27\"}, 0]'),
+(131, 'Pagi yang cerah untuk memulai kegiatan baru. Tidur dipagi hari, bangun disiang hari, buat tugas di sore hari, malam hari masih buat tugas hingga tidur di pagi hari. Berulang sampe mampus 🙂  <a href=\'http://localhost/jepri-media/public/Home/hastag/resolusibaru\' class = \'hastag\'>#resolusibaru</a>', 2, '2020-12-07 09:25:00', 0, '[0, \"2\"]', '[0]');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trending`
+--
+
+CREATE TABLE `trending` (
+  `id` int(11) NOT NULL,
+  `hastag` char(25) NOT NULL,
+  `popularity` int(11) NOT NULL,
+  `lastUpdate` datetime NOT NULL,
+  `posts` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `isSuspended` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `trending`
+--
+
+INSERT INTO `trending` (`id`, `hastag`, `popularity`, `lastUpdate`, `posts`, `isSuspended`) VALUES
+(50, 'desember', 1, '2020-12-07 00:38:00', '[120]', 0),
+(51, 'resolusibaru', 2, '2020-12-07 09:25:00', '[120, 122, 126, 131]', 0),
+(53, '2021', 2, '2020-12-07 02:19:00', '[122, 126]', 0),
+(54, 'covid19', 1, '2020-12-07 02:10:00', '[122]', 0);
 
 -- --------------------------------------------------------
 
@@ -72,13 +97,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `gender`, `profile`, `banner`, `role`, `isActive`) VALUES
-(2, 'Komang Jepri Kusuma Jaya', 'jepri@gmail.com', '$2y$10$sYL/1Lc5MwdkJiDu.QTHmOFThAyzKrPdSnV6iKNEzFFrqxGb2P33y', 'male', '16030086632.jpeg', '16030086632.jpeg', 'USR', 1),
+(2, 'Komang Jepri Kusuma Jaya', 'jepri@gmail.com', '$2y$10$sYL/1Lc5MwdkJiDu.QTHmOFThAyzKrPdSnV6iKNEzFFrqxGb2P33y', 'male', '16030086632.jpeg', '16073048972.jpeg', 'USR', 1),
 (6, 'Putu Tiara Widiastini', 'tiara@gmail.com', '$2y$10$/et56r3OsACKiHcjQL6IFupgg5mH0mqY1HrdwTTqviHWIkD9frYtm', 'famale', '16029597546.jpeg', 'banner.png', 'USR', 1),
-(7, 'Admin', 'admin@gmail.com', '$2y$10$FoP4OfdbbXOEH8foRvM5duCZBI3IckZZZTR0POKWRrCndVETF.FX2', 'male', 'default-male.png', 'banner.png', 'ADM', 1),
-(10, 'Jepri Kusuma', 'jeprikusuma@gmial.com', '$2y$10$FxPS1zwBso07.mrRpX2r6OHkTnPabd6hyFNj0YTpoQfDtgjrkx5hO', 'male', 'default-male.png', 'banner.png', 'USR', 1),
-(11, 'Rio Ariawan', 'rio@gmail.com', '$2y$10$YV9CQjp6xRKEglpu0CncM..QBqMdwo49Ay8MOkSTvKgAfFkg7BIwu', 'male', 'default-male.png', 'banner.png', 'USR', 1),
-(12, 'Sri Widya', 'widya@gmail.com', '$2y$10$I4ZkfyB..djEbfNZGv7TCO6he5p/n/zYVV4vNnN/N6xIs1VRWZUfy', 'famale', 'default-famale.png', 'banner.png', 'USR', 1),
-(13, 'Putu Zasya Eka Satya Nugraha', 'zasya@gmail.com', '$2y$10$rCje34v4O1O52PV3BnRuT.0Fp4JDIG7hN/in9DyCEl6OZv5fidV3u', 'male', '160404484413.png', '160404501613.jpeg', 'USR', 1);
+(7, 'Admin', 'admin@jeprimedia.com', '$2y$10$FoP4OfdbbXOEH8foRvM5duCZBI3IckZZZTR0POKWRrCndVETF.FX2', 'male', 'default-male.png', 'banner.png', 'ADM', 1),
+(13, 'Putu Zasya Eka Satya Nugraha', 'zasya@gmail.com', '$2y$10$rCje34v4O1O52PV3BnRuT.0Fp4JDIG7hN/in9DyCEl6OZv5fidV3u', 'male', '160404484413.png', '160404501613.jpeg', 'USR', 1),
+(15, 'Sri Widya', 'widya@gmail.com', '$2y$10$aA03hMHHku2S8GZjmAU/g.wbWRMpXeQfxMqqBbXuniLZ/wCBef49a', 'famale', 'default-famale.png', 'banner.png', 'USR', 1),
+(20, 'Rio Ariawan', 'rio@gmail.com', '$2y$10$2g8tssjVzyKawTQMl33dLOA3KYMoQtBYAG2gmK6gzCId/tB/fomPu', 'male', 'default-male.png', 'banner.png', 'USR', 1);
 
 -- --------------------------------------------------------
 
@@ -111,6 +135,12 @@ ALTER TABLE `posts`
   ADD KEY `user_post` (`user`);
 
 --
+-- Indexes for table `trending`
+--
+ALTER TABLE `trending`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -132,13 +162,19 @@ ALTER TABLE `users-roles`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+
+--
+-- AUTO_INCREMENT for table `trending`
+--
+ALTER TABLE `trending`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
