@@ -109,7 +109,7 @@ class Hastag_model{
     public function trendingHastag(){
         $query = "SELECT * FROM ".$this->table."
             WHERE isSuspended = 0
-            ORDER BY lastUpdate DESC, popularity DESC LIMIT 5;";
+            ORDER BY TO_DAYS(lastUpdate) DESC, popularity DESC LIMIT 5;";
 
         $this->db->query($query);
         $this->db->execute();
@@ -119,7 +119,7 @@ class Hastag_model{
 
     public function allHastag(){
         $query = "SELECT * FROM ".$this->table."
-            ORDER BY lastUpdate DESC, popularity DESC;";
+            ORDER BY TO_DAYS(lastUpdate) DESC, popularity DESC;";
 
         $this->db->query($query);
         $this->db->execute();
@@ -129,7 +129,7 @@ class Hastag_model{
     public function searchHastag($keyword){
         $query = "SELECT * FROM ". $this->table ."
                 WHERE (hastag LIKE CONCAT('%', :keyword , '%'))
-                ORDER BY lastUpdate DESC, popularity DESC;";
+                ORDER BY lastUpTO_DAYS(lastUpdate)date DESC, popularity DESC;";
 
 		$this->db->query($query);
         $this->db->bind('keyword', $keyword);
@@ -141,7 +141,7 @@ class Hastag_model{
     public function suspendedHastag(){
         $query = "SELECT * FROM ". $this->table ."
                 WHERE isSuspended = :suspended
-                ORDER BY lastUpdate DESC, popularity DESC;";
+                ORDER BY TO_DAYS(lastUpdate) DESC, popularity DESC;";
 
         $this->db->query($query);
         $this->db->bind('suspended', 1);
