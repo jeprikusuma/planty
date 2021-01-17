@@ -8,8 +8,9 @@
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
   </script>
   <script src="<?= BASEURL;?>/js/app.js"></script>
+  <script src="<?= BASEURL;?>/js/dia.js"></script>
   <script src="<?= BASEURL;?>/js/modal.js"></script>
-  <script src="<?= BASEURL;?>/js/user.js"></script>
+  <script src="<?= BASEURL;?>/js/userHandle.js"></script>
   <script src="<?= BASEURL;?>/js/adminAPI.js"></script>
 </body>
 

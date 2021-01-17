@@ -21,6 +21,14 @@
 
   <!-- Main contents -->
   <main>
+    <!-- view -->
+     <div class="view-full fixed-top vw-100 vh-100 d-none flex-column justify-content-center align-items-center">
+      <!-- image full view -->
+      <div class="main-full">
+        <img src="" class="status-img rounded mb-3"   alt="">
+      </div>
+    </div>
+    <!-- container -->
     <div class="container d-flex flex-column flex-lg-row flex-md-row justify-content-center">
       <!-- Aside areas -->
       <div class="aside col-md-3 col-lg-3 col-12 d-flex flex-column h-50">
@@ -52,10 +60,11 @@
                   <img src="<?= BASEURL;?>/img/users/profile/<?= $data["user"]["profile"];?>" class="photo-status rounded-circle" alt="">
                   <div class="ml-2 col-12 d-flex flex-column">
                     <label for="inImg" class="select-img bg-light col-10 rounded py-5 mb-3 d-flex justify-content-center text-muted">
-                      Click to select an image...
+                      <img class="rounded d-none" src="" alt="">
+                       <span > Click to select an image...</span>
                     </label>
                     <input type="text" name="content" class="form-control col-10" placeholder="What do you think?" autocomplete="off" id = "posting-status" >
-                    <input type="file" name="" id="inImg" class="d-none">
+                    <input type="file" name="" id="inImg" class="d-none" >
                   </div>
                 </div>
                 <div class="mt-4 d-flex justify-content-end">

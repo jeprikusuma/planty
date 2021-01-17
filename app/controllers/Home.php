@@ -170,9 +170,7 @@ class Home extends Controller{
 				Flasher::setFlash('Password not match!', 'danger');
 				header('Location:'.BASEURL.'/Home');
 			}
-		}
-
-		
+		}		
 		// cek & upload foto profil
 		$profileUploaded = false;
 		if($_FILES["profile-photo"]["name"] != ""){
@@ -236,8 +234,23 @@ class Home extends Controller{
 
 	}
 	public function posting(){
-		$_POST = json_decode(file_get_contents('php://input'), true);
+		// data user
+		$user = $this->model('User_model')->findUser( $_SESSION["user"]);;
+		$_POST["file"] = NULL;
 
+		if(isset($_FILES['file'])){
+			if($_FILES['file']['size'] <= 3000000){
+				$upload = $this->upload($user["id"], $_FILES["file"], "img/users/post/", "jpg|png|jpeg");
+				if(!$upload){
+					Flasher::setFlash('Error on upload. Check your file extention!', 'danger');
+				}else{
+					$_POST["file"] = $upload;
+				}
+			}else{
+				Flasher::setFlash('Error on upload. Image larger than 3 MB!', 'danger');
+			};
+			
+		}
 		if(!isset($_POST["posting"])){
 			header('Location:'.BASEURL.'/Home');
 		}
@@ -246,6 +259,7 @@ class Home extends Controller{
 		if(!isset($_POST["content"])){
 			Flasher::setFlash("Can't read content on post!", 'danger');
 		}
+	
 		// menyiapkan hastag
 		$hastag = explode(" ", $_POST["content"]);
 		$getTag = [];
@@ -320,7 +334,7 @@ class Home extends Controller{
 			Flasher::setFlash('Error on post!', 'danger');
 		}
 
-		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
+		$data['user'] = $user;
 		$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
 		$data["nav"] = "public";
 		$this->view('home/discover', $data);
@@ -337,6 +351,11 @@ class Home extends Controller{
 
 		if($post['user'] != $user['id']){
 			header('Location:'.BASEURL.'/Auth/register');
+		}
+
+		// delete file
+		if($post['file'] != NULL){
+			unlink('img/users/post/' . $post['file'] );
 		}
 
 		// delete hastag post terlebih dahulu

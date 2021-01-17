@@ -64,6 +64,7 @@
     background-color: #d5d5d5;
 }
 
+
 @media (max-width: 768px) {
     .banner{
             width: unset;

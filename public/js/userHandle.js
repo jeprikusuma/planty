@@ -35,20 +35,22 @@ const reloadHastag = () =>{
 if(posting != null){
     posting.addEventListener('submit', (e) =>{
         e.preventDefault();
-    
+        
+        const data = new FormData();
+        data.append("content", postingStatus.value);
+        data.append("file", imageInput.files[0]);
+        data.append("posting", true);
+
         if(postingStatus.value != ""){
             fetch(url + "posting", { 
                 method: "POST", 
-                headers: { "Content-Type": "application/json; charset=utf-8"},
-                body: JSON.stringify({
-                    "content": postingStatus.value,
-                    "posting": true
-                })
-            })
+                body: data
+            })          
             .then(response => response.text())
             .then(data => {
                 postingStatus.value = "";
                 discover.innerHTML = data;
+                clearSelectedImage();
                 reloadHastag();
             });
         }

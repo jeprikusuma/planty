@@ -21,6 +21,7 @@ class Post_model{
                 ".$this->tableUser.".id as user, 
                 ".$this->tableUser.".profile as profile, 
                 ".$this->table.".content as content,
+                ".$this->table.".file as file,
                 ".$this->table.".suspended as suspended,
                 ".$this->table.".id as id,
                 ".$this->table.".likes as likes,
@@ -42,6 +43,7 @@ class Post_model{
                         ".$this->tableUser.".id as user, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
+                        ".$this->table.".file as file,
                         ".$this->table.".suspended as suspended,
                         ".$this->table.".id as id,
                         ".$this->table.".likes as likes,
@@ -61,6 +63,7 @@ class Post_model{
                         ".$this->tableUser.".id as user, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
+                        ".$this->table.".file as file,
                         ".$this->table.".suspended as suspended,
                         ".$this->table.".id as id,
                         ".$this->table.".likes as likes,
@@ -82,6 +85,7 @@ class Post_model{
                         ".$this->tableUser.".id as user, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
+                        ".$this->table.".file as file,
                         ".$this->table.".suspended as suspended,
                         ".$this->table.".id as id,
                         ".$this->table.".likes as likes,
@@ -105,6 +109,7 @@ class Post_model{
                         ".$this->tableUser.".id as user, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
+                        ".$this->table.".file as file,
                         ".$this->table.".suspended as suspended,
                         ".$this->table.".id as id,
                         ".$this->table.".likes as likes,
@@ -126,6 +131,7 @@ class Post_model{
                         ".$this->tableUser.".name as name, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
+                        ".$this->table.".file as file,
                         ".$this->table.".likes as likes,
                         ".$this->table.".comments as comments,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
@@ -145,6 +151,7 @@ class Post_model{
                         ".$this->tableUser.".name as name, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
+                        ".$this->table.".file as file,
                         ".$this->table.".likes as likes,
                         ".$this->table.".comments as comments,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
@@ -162,11 +169,12 @@ class Post_model{
     public function postingPost($post){
         $query = "INSERT INTO ".$this->table.
 					" VALUES(
-                        '', :content, :user, :upload, :suspended, JSON_ARRAY(:like), JSON_ARRAY(:like) );";
+                        '', :content, :file, :user, :upload, :suspended, JSON_ARRAY(:like), JSON_ARRAY(:like) );";
 
         date_default_timezone_set("Asia/Singapore");
 		$this->db->query($query);
-		$this->db->bind('content', $post['content']);
+        $this->db->bind('content', $post['content']);
+        $this->db->bind('file', $post['file']);
         $this->db->bind('user', $post['user']);
 		$this->db->bind('upload', date('Y/m/d H:i'));
         $this->db->bind('suspended', 0);

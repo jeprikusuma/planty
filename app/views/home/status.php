@@ -17,8 +17,11 @@
                   </div>
                 </div>
                 <div class="mt-4 d-flex flex-column  justify-content-start">
+                <?php if($post['file'] != NULL): ?>
+                   <img src="<?= BASEURL;?>/img/users/post/<?=$post["file"]?>" class="status-img rounded mb-3" width="100%" alt="" onclick="viewFull('<?= BASEURL;?>/img/users/post/', '<?=$post['file']?>')">
+                <?php endif; ?>
                   <p><?=$post["content"]?></p>
-                  <div class="more<?=$post["id"]?> d-flex align-items-center">
+                  <div class="more<?=$post["id"]?> d-flex align-items-center mt-2">
                    <?php require("statusmore.php")?>
                   </div>
                 </div>
