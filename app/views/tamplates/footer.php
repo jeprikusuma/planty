@@ -9,7 +9,7 @@
   </script>
   <script src="<?= BASEURL;?>/js/app.js"></script>
   <script src="<?= BASEURL;?>/js/modal.js"></script>
-  <script src="<?= BASEURL;?>/js/userAPI.js"></script>
+  <script src="<?= BASEURL;?>/js/user.js"></script>
   <script src="<?= BASEURL;?>/js/adminAPI.js"></script>
 </body>
 

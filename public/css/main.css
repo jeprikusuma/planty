@@ -57,11 +57,17 @@
     position: sticky;
     top: 0rem;
 }
+.aside-element{
+    font-size: 1em;
+}
+.aside-element:hover{
+    background-color: #d5d5d5;
+}
 
 @media (max-width: 768px) {
     .banner{
-        width: unset;
-        height: 100%;
+            width: unset;
+            height: 100%;
     }
     .profile{
         transform: translateY(-30%);
@@ -76,6 +82,9 @@
     .aside-adm{
         position: static;
     }
+    main .container{
+        overflow-x: hidden;
+    }
   }
   
   @media (min-width: 992px) {
@@ -83,11 +92,17 @@
         width: 100%;
         height: unset;
     }
+    main .container{
+        overflow-x: visible;
+    }
   }
   
   @media (min-width: 1200px) {
     .banner{
         width: 100%;
         height: unset;
+    }
+    main .container{
+        overflow-x: visible;
     }
   }

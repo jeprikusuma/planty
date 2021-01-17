@@ -78,8 +78,17 @@ if(posting != null){
         trending.forEach(trend => {
             trend.addEventListener("click",(e) => {
                 e.preventDefault();
+                link1 = e.target.href;
+                link2 = e.target.parentElement.parentElement.href;
+                link3 = e.target.parentElement.href;
+                
+                link = link1;
 
-                fetch(e.target.href, { 
+                if(link2 != undefined) link = link2;
+                else if(link3 != undefined) link = link3;
+                else link = link1;
+                
+                fetch(link, { 
                     method: "POST", 
                     headers: { "Content-Type": "application/json; charset=utf-8"},
                     body: JSON.stringify({"hastag" : true})

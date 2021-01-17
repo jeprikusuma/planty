@@ -21,70 +21,42 @@
 
   <!-- Main contents -->
   <main>
-    <div class="container d-flex flex-column flex-lg-row flex-md-row justify-content-between">
-      <!-- Banner areas -->
-      <div class="aside col-md-4 col-lg-4 col-12 d-flex flex-column h-50">
-        <!-- Aside area -->
-        <div class="order-4 order-md-1 order-lg-1  mb-3">
-          <div class="input-group">
-            <!-- Search user -->
-            <input type="text" name="search" id = "search" class="form-control" autocomplete="off" placeholder="Whose posts do you only want to see?" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-              <button type="submit" id="button-search" class="btn btn-primary" type="button" onclick="searchClick()"><i class="fas fa-search"></i></button>
-            </div>
-          </div>
-        </div>
-        <!-- Trendings area -->
-        <div class="p-3 mt-3 mb-4 border order-md-2 order-lg-2 rounded order-3">
-          <h4>Trending</h4>
-          <?php foreach($data["trending"] as $trend): ?>
-          <hr>
-          <a href="<?=BASEURL?>/Home/hastag/<?=$trend["hastag"]?>" class="trending d-flex text-dark align-items-center text-center">
-            <i class="fas fa-hashtag"></i>
-            <p class="my-auto ml-3 text-left"><?=$trend["hastag"]?>
-            <span class="small"><br><?= count(json_decode($trend["posts"], true));?> Posts</span>
-            </p>
-          </a>
-          <?php endforeach; ?>
-        </div>
+    <div class="container d-flex flex-column flex-lg-row flex-md-row justify-content-center">
+      <!-- Aside areas -->
+      <div class="aside col-md-3 col-lg-3 col-12 d-flex flex-column h-50">
         <!-- Setting area -->
-        <div class="p-3 mt-2 mb-4 border rounded order-2">
-          <h4>Setting</h4>
-          <hr>
-          <a href="#" class="d-flex text-dark align-items-center text-center" data-toggle="modal" data-target="#input-edit">
+        <div class="p-3 mb-4 rounded order-2">
+          <a href="#" class="aside-element badge p-3 rounded-pill d-flex text-dark align-items-center text-center" data-toggle="modal" data-target="#input-edit">
             <i class="fas fa-user-cog"></i>
-            <p class="my-auto ml-3">Edit Profile</p>
+            <p class=" my-auto ml-3">Edit Profile</p>
           </a>
-          <hr>
-          <a href="#" class="d-flex text-dark align-items-center text-center" data-toggle="modal" data-target="#static-about">
+          <a href="#" class="aside-element  badge p-3 mt-2 rounded-pill d-flex text-dark align-items-center text-center" data-toggle="modal" data-target="#static-about">
             <i class="fas fa-info-circle"></i>
             <p class="my-auto ml-3">About</p>
           </a>
-          <hr>
-          <a href="#" class="d-flex align-items-center text-danger text-center" data-toggle="modal" data-target="#single-logout">
+          <a href="#" class="aside-element  badge p-3 mt-2 rounded-pill d-flex align-items-center text-danger text-center" data-toggle="modal" data-target="#single-logout">
             <i class="fas fa-sign-out-alt"></i>
             <p class="my-auto ml-3">Logout</p>
           </a href="#">
         </div>
-        <!-- alert -->
-        <div class="alert alert-primary alert-dismissible fade show order-1 order-md-3 order-lg-3" role="alert">
-          You have read and agree to the <strong>terms and conditions and accept the privacy policy</strong>. Any content deemed infringing will be removed.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
       </div>
 
       <!-- Main content -->
-      <div class="col-md-7 col-lg-7 col-12">
+      <div class="col-md-6 col-lg-6 mx-0 mx-md-2 mx-lg-2 col-12 order-3 order-md-2 order-lg-2">
         <!-- posting-->
         <div class="posting">
-          <div class="col-12 shadow-sm p-4 mb-4 bg-white rounded">
+          <div class="col-12 shadow-sm py-3 px-4 mb-4 bg-white rounded">
             <!-- input -->
               <form action="" method="post" id ="posting">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-start">
                   <img src="<?= BASEURL;?>/img/users/profile/<?= $data["user"]["profile"];?>" class="photo-status rounded-circle" alt="">
-                  <input type="text" name="content" class="ml-2 form-control col-10" placeholder="What do you think?" autocomplete="off" id = "posting-status" >
+                  <div class="ml-2 col-12 d-flex flex-column">
+                    <label for="inImg" class="select-img bg-light col-10 rounded py-5 mb-3 d-flex justify-content-center text-muted">
+                      Click to select an image...
+                    </label>
+                    <input type="text" name="content" class="form-control col-10" placeholder="What do you think?" autocomplete="off" id = "posting-status" >
+                    <input type="file" name="" id="inImg" class="d-none">
+                  </div>
                 </div>
                 <div class="mt-4 d-flex justify-content-end">
                   <button type="submit" class="btn btn-primary">Send</button>

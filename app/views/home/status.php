@@ -9,8 +9,8 @@
         <?php foreach($data["posts"] as $post): ?>
           <div class="col-12 shadow-sm p-4 mb-4 bg-white rounded">
             <!-- header -->
-                <div class="d-flex align-items-center">
-                  <img src="<?= BASEURL;?>/img/users/profile/<?=$post["profile"]?>" class="photo-status rounded-circle" alt="">
+                <div class="d-flex align-items-start">
+                  <img src="<?= BASEURL;?>/img/users/profile/<?=$post["profile"]?>" class="photo-status mt-1 rounded-circle" alt="">
                   <div class="d-flex flex-column ml-4">
                     <h5><?=$post["name"]?></h5>
                     <p class="text-secondary"><?=$post["upload"]?></p>
