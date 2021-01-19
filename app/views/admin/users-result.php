@@ -11,7 +11,7 @@
           <div class="col-12 shadow-sm p-4 mb-4 d-flex justify-content-between <?= ($user["isActive"] == 1)?'bg-white': 'bg-light'; ?>  rounded flex-column flex-lg-row flex-md-row">
             <!-- header -->
                 <div class="d-flex align-items-center">
-                  <img src="<?= BASEURL;?>/img/users/profile/<?= $user["profile"];?>" class="rounded-circle" width="50px" alt="">
+                  <img src="<?= BASEURL;?>/img/users/profile/<?= $user["profile"];?>" class="adm-sm-img rounded-circle" width="50px" height="50px" alt="">
                   <div class="d-flex flex-column ml-4">
                     <h5><?= $user["name"];?></h5>
                     <p class="text-secondary"><?= $user["email"];?></p>

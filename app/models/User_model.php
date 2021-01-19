@@ -16,6 +16,13 @@ class User_model{
  		return $this->db->single();
 	}
 
+	public function findUserById($id){
+		$this->db->query('SELECT * FROM '.$this->table.' WHERE id=:id');
+		 $this->db->bind('id', $id);
+		 
+ 		return $this->db->single();
+	}
+
 	public function searchUsers($keyword){
 		$this->db->query("SELECT * FROM ".$this->table." WHERE (name LIKE CONCAT('%', :keyword , '%'))");
 		 $this->db->bind('keyword', $keyword);
@@ -46,7 +53,7 @@ class User_model{
 	public function registerUser($post){
 		$query = "INSERT INTO ".$this->table.
 					" VALUES(
-						'', :name, :email, :password, :gender, :profile, :banner, 'USR', :active)";
+						'', :name, :email, :password, :gender, :profile, :banner, 'USR', :active, :verify)";
 
 		$this->db->query($query);
 		$this->db->bind('name', $post['name']);
@@ -56,6 +63,20 @@ class User_model{
 		$this->db->bind('profile', $post['profile']);
 		$this->db->bind('banner', $post['banner']);
 		$this->db->bind('active', 1);
+		$this->db->bind('verify', bin2hex(random_bytes(16)));
+		$this->db->execute();
+
+		return $this->db->rowCount();
+	}
+
+	public function verifyUser($id, $code){
+		$query = "UPDATE " .$this->table."
+				SET verify = NULL
+				WHERE id = :id AND verify = :code;";
+				
+		$this->db->query($query);
+		$this->db->bind('id', $id);
+		$this->db->bind('code', $code);
 		$this->db->execute();
 
 		return $this->db->rowCount();

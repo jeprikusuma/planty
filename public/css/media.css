@@ -39,6 +39,10 @@
     background-color: white;
 }
 
+.adm-sm-img{
+    object-fit: cover;
+}
+
 @media (max-width: 768px) {
     .status-img{
         height: 15rem;

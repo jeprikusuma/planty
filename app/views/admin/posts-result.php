@@ -11,13 +11,16 @@
           <div class="col-12 shadow-sm p-4 mb-4  <?= ($post["suspended"] == 0)?'bg-white': 'bg-light'; ?> rounded">
             <!-- header -->
                 <div class="d-flex align-items-center">
-                  <img src="<?= BASEURL;?>/img/users/profile/<?=$post["profile"]?>" class="rounded-circle" width="50px" alt="">
-                  <div class="d-flex flex-column ml-4">
+                  <img src="<?= BASEURL;?>/img/users/profile/<?=$post["profile"]?>" class="adm-sm-img rounded-circle" width="50px" height="50px" alt="">
+                  <div class=" d-flex flex-column ml-4">
                     <h5><?=$post["name"]?></h5>
                     <p class="text-secondary"><?=$post["upload"]?></p>
                   </div>
                 </div>
-                <div class="mt-4 d-flex justify-content-start">
+                <div class="mt-4 d-flex flex-column justify-content-start">
+                  <?php if($post['file'] != NULL): ?>
+                    <img src="<?= BASEURL;?>/img/users/post/<?=$post["file"]?>" class="status-img rounded mb-3" width="100%" alt="">
+                  <?php endif; ?>
                   <p><?=$post["content"]?></p>
                 </div>
                 <div class="more<?=$post["id"]?> d-flex align-items-center">

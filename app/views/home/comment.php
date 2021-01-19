@@ -5,11 +5,11 @@
               <div class="d-flex align-items-center">
                 <img src="<?= BASEURL;?>/img/users/profile/<?=$data["profile"]?>"  class="photo-status rounded-circle"  width="50px"  alt="">
                 <div class="d-flex flex-column ml-4">
-                  <h5><?=$data["name"]?></h5>
+                  <a href="<?= BASEURL;?>/Home/visit/<?= $post['user'];?>"><h5 class="text-dark"><?=$data["name"]?></h5></a>
                   <p class="text-secondary"><?=$data["upload"]?></p>
                 </div>
               </div>
-              <div class="mt-4 mb-3 d-flex justify-content-start">
+              <div class="mt-4 mb-3 d-flex flex-column justify-content-start">
                   <?php if($data['file'] != NULL): ?>
                     <img src="<?= BASEURL;?>/img/users/post/<?=$data["file"]?>" class="status-img rounded mb-3" width="100%"   alt="">
                   <?php endif; ?>

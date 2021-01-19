@@ -18,9 +18,8 @@
         <div class="col-12 col-md-10 col-lg-5 p-0 mt-5 mt-lg-0">
         <?php Flasher::flash(); ?>
           <!-- Header -->
-          <div class="text-primary">
+          <div class="text-primary mb-4">
             <h2>Welcome Back!</h2>
-            <hr />
           </div>
           <!-- Form -->
           <form method="post">

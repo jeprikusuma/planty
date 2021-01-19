@@ -10,7 +10,7 @@
                             <div class="comment mt-4 ml-2 d-flex justify-content-start">
                                 <img src="<?= BASEURL;?>/img/users/profile/<?=$comment["img"]?>"  class="photo-status rounded-circle" width="30px" alt="">
                                 <div class="d-flex flex-column ml-4">
-                                    <h5><?=$comment["name"]?></h5>
+                                <a href="<?= BASEURL;?>/Home/visit/<?= $post['user'];?>"><h5 class="text-dark"><?=$data["name"]?></h5></a>
                                     <p class="small text-secondary">Reply on <?=$comment["upload"]?></p>
                                     <p><?=$comment["comment"]?></p>
                                 </div>

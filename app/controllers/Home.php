@@ -11,6 +11,7 @@ class Home extends Controller{
 		$data['trending'] = $this->model('Hastag_model')->trendingHastag();
 		$data['header'] = 'Home';
 		$data['nav'] = 'public';
+
 		// view
 		$this->view('tamplates/header', $data);
 		$this->view('home/index', $data);
@@ -18,6 +19,35 @@ class Home extends Controller{
 		$this->view('tamplates/modal', $data);
 		$this->view('tamplates/footer');
 	}
+
+	public function visit($id = null){
+		if(Session::role() != 'User'){
+			header('Location:'.BASEURL.'/Auth/register');
+		}
+
+		if($id == null){
+			header('Location:'.BASEURL.'/Home');
+		}
+
+		// menyiapkan data user
+		$data['user'] = $this->model('User_model')->findUserById($id);
+		if(!$data['user'] || 
+			$data['user']['name'] == 'Admin' || 
+			$data['user']['email'] == $_SESSION['user']){
+			header('Location:'.BASEURL.'/Home');
+		}
+
+		$data['posts'] = $this->model('Post_model')->searchPosts($data['user']['name']);
+		$data['header'] = 'Home';
+
+		// view
+		$this->view('tamplates/header', $data);
+		$this->view('home/visit', $data);
+		$this->view('home/visitpost', $data);
+		$this->view('tamplates/modal', $data);
+		$this->view('tamplates/footer');
+	}
+
 	public function search($keyword = null){
 		$_POST = json_decode(file_get_contents('php://input'), true);
 		if(!isset($_POST['status'])){

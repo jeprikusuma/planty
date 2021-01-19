@@ -12,7 +12,7 @@
                 <div class="d-flex align-items-start">
                   <img src="<?= BASEURL;?>/img/users/profile/<?=$post["profile"]?>" class="photo-status mt-1 rounded-circle" alt="">
                   <div class="d-flex flex-column ml-4">
-                    <h5><?=$post["name"]?></h5>
+                    <a href="<?= BASEURL;?>/Home/visit/<?= $post['user'];?>"><h5 class="text-dark"><?=$post["name"]?></h5></a>
                     <p class="text-secondary"><?=$post["upload"]?></p>
                   </div>
                 </div>
