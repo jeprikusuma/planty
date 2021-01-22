@@ -17,11 +17,11 @@
           </div>
         </div>
         <!-- Trendings area -->
-        <div class="p-3 mt-3 mb-4 border text-dark order-md-2 order-lg-2 rounded order-3">
+        <div class="p-3 mt-3 mb-4 shadow-sm text-dark order-md-2 order-lg-2 rounded order-3">
           <h4>Trending</h4>
           <?php foreach($data["trending"] as $trend): ?>
           <hr>
-          <a href="<?=BASEURL?>/Home/hastag/<?=$trend["hastag"]?>" class="trending d-flex text-dark align-items-center text-center">
+          <a href="<?=BASEURL?>/Home/hastag/<?=$trend["hastag"]?>" class="trending d-flex text-dark align-items-center text-center animate__animated animate__fadeInUp animate">
             <i class="fas fa-hashtag"></i>
             <p class="my-auto ml-3 text-left"><?=$trend["hastag"]?>
             <span class="small"><br><?= count(json_decode($trend["posts"], true));?> Posts</span>
@@ -30,7 +30,7 @@
           <?php endforeach; ?>
         </div>
         <!-- alert -->
-        <div class="alert alert-primary alert-dismissible fade show order-1 order-md-3 order-lg-3" role="alert">
+        <div class="alert alert-info alert-dismissible fade show order-1 order-md-3 order-lg-3 animate__animated animate__fadeIn animate" role="alert">
           You have read and agree to the <strong>terms and conditions and accept the privacy policy</strong>. Any content deemed infringing will be removed.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>

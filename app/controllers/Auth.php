@@ -146,27 +146,34 @@ class Auth extends Controller{
     }
 
     public function verify($id = null, $code = null){   
-       if($id != null){
-           $id = substr($id, 7);
-           $user = $this->model("User_model")->findUserById($id);
-           if(!$user){
-               $this->logout();
-           }else if($_SESSION['user'] != $user['email']){
-               $this->logout();
-           }
-       }else{
-          $this->logout();
-       }
+        $linkId = $id;
+        if($id != null){
+            $id = substr($id, 7);
+            $user = $this->model("User_model")->findUserById($id);
+            if(!$user){
+                $this->logout();
+            }else if($_SESSION['user'] != $user['email']){
+                $this->logout();
+            }
+        }else{
+            $this->logout();
+        }
 
-       if($code != null){
-           var_dump( $this->model("User_model")->verifyUser($id, $code));
-           header('Location:'.BASEURL.'/Auth');
-       }else{
-            $data['header'] = 'Verification';
-            $this->view('tamplates/header', $data);
-            $this->view('auth/verify');
-            $this->view('tamplates/footer');
-        }  
+        if($code == "resend"){
+            $this->sendVerification();
+            header('Location:'.BASEURL.'/Auth');
+        }
+
+        if($code != null){
+            $this->model("User_model")->verifyUser($id, $code);
+            header('Location:'.BASEURL.'/Auth');
+        }else{
+                $data['header'] = 'Verification';
+                $data['id'] = $linkId;
+                $this->view('tamplates/header', $data);
+                $this->view('auth/verify', $data);
+                $this->view('tamplates/footer');
+            }  
     }
 
     public function logout(){
@@ -195,21 +202,21 @@ class Auth extends Controller{
 
 		$mail->IsHTML(true);
 		$mail->AddAddress($user["email"], $user["name"]);
-		$mail->SetFrom("admin@jeprimedia.com", "Jepri Media");
+		$mail->SetFrom("admin@planty.com", "Planty");
 		$mail->AddReplyTo("no-reply@gmail.com", "no-reply");
-		$mail->Subject = "Verify Account";
+		$mail->Subject = "Planty: Verify Account";
 		$content = '
 		<html>
 			<body>
 				<p>Hello, <strong>'.$user["name"].'</strong></p>
 				<br>
-				<h2 style = "color: #0275d8;">Welcome to Jepri Media</h2>
+				<h2 style = "color: #0275d8;">Welcome to Plant Comunity</h2>
 				<p>Please click the verification button below to activate your account.</p>
 				<br>
 				<a href="'.BASEURL.'/Auth/verify/'.$id.'/'.$code.'" style="
 						padding: .8rem 1rem;
 						text-align: center;
-						background-color: #0275d8;
+						background-color: : #77cad3;
 						text-decoration: none;
 						color: white;
 						border-radius: 0.5rem;

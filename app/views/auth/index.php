@@ -6,12 +6,11 @@
         <!-- Image Section -->
         <div class="col-12 col-md-10 col-lg-6 p-0 align-items-between justify-content-center">
           <div class="d-flex overflow-hidden justify-content-center">
-            <img src="<?= BASEURL;?>/img/system/register.png" class="w-100" alt="" />
+            <img src="<?= BASEURL;?>/img/system/picture1.png" class="w-100 animate__animated animate__fadeIn animate" alt="" />
           </div>
           <div class="m-3 text-center text-secondary">
-            <h5>Play with your friends easly.</h5>
-            <p>Jepri Media is a platform for connecting people around the world
-              with one tap on your screen.</p>
+            <h5>Unlimited access to all features.</h5>
+            <p>Planty is a completely free application, use it wherever and whenever you want without fear of being charged.</p>
           </div>
         </div>
         <!-- Form Section -->
@@ -19,7 +18,7 @@
         <?php Flasher::flash(); ?>
           <!-- Header -->
           <div class="text-primary mb-4">
-            <h2>Welcome <span id="name-user"></span></h2>
+            <h2 >Welcome <span id="name-user"></span></h2>
           </div>
           <!-- Form -->
           <form method="post">
@@ -71,17 +70,17 @@
                 </label>
               </div>
             </div>
-            <button type="submit" name="register" class="btn btn-primary">Register Account</button>
+            <button type="submit" name="register" class="btn btn-primary">Register</button>
           </form>
           <p class="text-center mt-3 text-secondary">Already here? <a href="<?= BASEURL;?>/Auth/login">Login</a></p>
         </div>
       </div>
     </div>
     <div class="bg bg-top position-absolute d-none d-md-block d-lg-block">
-      <img src="<?= BASEURL;?>/img/system/bg.png" alt="">
+      <img src="<?= BASEURL;?>/img/system/element.png" alt="">
     </div>
     <div class="bg bg-bot position-absolute d-none d-md-block d-lg-block">
-      <img src="<?= BASEURL;?>/img/system/bg.png" alt="">
+      <img src="<?= BASEURL;?>/img/system/element.png" alt="">
     </div>
   </section>
 

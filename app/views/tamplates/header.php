@@ -8,11 +8,15 @@
   <link rel="stylesheet" href="<?= BASEURL;?>/css/main.css">
   <link rel="stylesheet" href="<?= BASEURL;?>/css/media.css">
   <link rel="stylesheet" href="<?= BASEURL;?>/css/status.css">
+  <link rel="stylesheet" href="<?= BASEURL;?>/css/theme.css">
+  <link rel="stylesheet" href="<?= BASEURL;?>/css/landing.css">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
   <script src="https://kit.fontawesome.com/2ac4b7478a.js" crossorigin="anonymous"></script>
   <!-- favicon -->
-  <link rel="icon" href="<?= BASEURL;?>/img/jepri-media-fav.png" type="image/x-icon" />
+  <link rel="icon" href="<?= BASEURL;?>/img/planty-fav.png" type="image/x-icon" />
 
-  <title>Jepri Media: <?=$data['header']; ?> </title>
+  <title>Planty: <?=$data['header']; ?> </title>
 </head>
 
 <body>

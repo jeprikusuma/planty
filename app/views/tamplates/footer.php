@@ -7,11 +7,12 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
   </script>
+  <script src="<?= BASEURL;?>/js/base-config.js"></script>
   <script src="<?= BASEURL;?>/js/app.js"></script>
-  <script src="<?= BASEURL;?>/js/dia.js"></script>
+  <script src="<?= BASEURL;?>/js/media.js"></script>
   <script src="<?= BASEURL;?>/js/modal.js"></script>
-  <script src="<?= BASEURL;?>/js/userHandle.js"></script>
-  <script src="<?= BASEURL;?>/js/adminAPI.js"></script>
+  <script src="<?= BASEURL;?>/js/us.js"></script>
+  <script src="<?= BASEURL;?>/js/adminEvent.js"></script>
 </body>
 
 </html>

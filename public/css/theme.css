@@ -1,0 +1,66 @@
+.text-primary, a{
+    color: #77cad3 !important;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.form-control:focus,
+.btn-primary:focus,
+.btn-primary.focus,
+.uneditable-input:focus {   
+  border-color:rgb(119, 202, 211);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(119, 202, 211, .6);
+  outline: 0 none;
+}
+
+
+input[type="checkbox"]:checked,
+input[type="checkbox"]::before,
+input[type="checkbox"]::after,
+select.form-control option:hover {
+    background-color:#77cad3 !important;
+}
+.btn{
+    color: white !important;
+}
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #77cad3 !important;
+    border-color: #77cad3 !important;
+}
+
+.btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary:visited {
+    color: #77cad3 !important;
+    border-color: #77cad3 !important;
+}
+
+.btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
+    color: #77cad3 !important;
+    background-color: #77cad300 !important;
+    border-color: #77cad300 !important;
+}
+
+.btn-primary:hover {
+    background-color:#8DC4E3 !important;
+    border-color: #8DC4E3 !important;
+}
+
+.btn-outline-primary:hover{
+    color: white !important;
+    background-color: #77cad3 !important;
+    border-color: #77cad3 !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(119, 202, 211, .6);
+}
+

@@ -1,5 +1,3 @@
-const adminUrl = "http://localhost/jepri-media/public/Admin/";
-
 
 const toHome = document.querySelector("#go-home"),
       toUser = document.querySelector("#go-user"),

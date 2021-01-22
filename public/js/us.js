@@ -8,14 +8,13 @@ let status = document.querySelector("#status"),
     delate = document.querySelector("#costumLink"),
     valueComment = document.querySelector("#comment-value");
 
-const url = "http://localhost/jepri-media/public/Home/";
-
 const reloadHastag = () =>{
     let hastags = document .querySelectorAll(".hastag");
     if(hastags != null){
         hastags.forEach(hastag => {
             hastag.addEventListener("click",(e) => {
                 e.preventDefault();
+                status.innerHTML = loading;
 
                 fetch(e.target.href, { 
                     method: "POST", 
@@ -35,7 +34,8 @@ const reloadHastag = () =>{
 if(posting != null){
     posting.addEventListener('submit', (e) =>{
         e.preventDefault();
-        
+        discover.innerHTML = loading;
+
         const data = new FormData();
         data.append("content", postingStatus.value);
         data.append("file", imageInput.files[0]);
@@ -58,6 +58,7 @@ if(posting != null){
     
     delate.addEventListener("click", (e) =>{
         e.preventDefault();
+        status.innerHTML = loading;
         
         fetch(e.target.href, { 
             method: "POST", 
@@ -80,6 +81,7 @@ if(posting != null){
         trending.forEach(trend => {
             trend.addEventListener("click",(e) => {
                 e.preventDefault();
+                status.innerHTML = loading;
                 link1 = e.target.href;
                 link2 = e.target.parentElement.parentElement.href;
                 link3 = e.target.parentElement.href;
@@ -109,6 +111,7 @@ if(posting != null){
 
 const searchClick = () =>{
     if(status != null){
+        status.innerHTML = loading;
         fetch(url + "search/" + search.value, { 
             method: "POST", 
             headers: { "Content-Type": "application/json; charset=utf-8"},
@@ -117,13 +120,13 @@ const searchClick = () =>{
         .then(response => response.text())
         .then(data => {
             status.innerHTML = data;
-            
         });
     }
 
 }
 
 const publicClick = () => {
+    discover.innerHTML = loading;
     fetch(url + "search", { 
         method: "POST", 
         headers: { "Content-Type": "application/json; charset=utf-8"},
@@ -141,6 +144,7 @@ const publicClick = () => {
 }
 
 const myClick = () => {
+    discover.innerHTML = loading;
     fetch(url + "mypost", { 
         method: "POST", 
         headers: { "Content-Type": "application/json; charset=utf-8"},
@@ -187,6 +191,7 @@ const unlike = (post)=>{
 }
 
 const toComment = (post)=>{
+    status.innerHTML = loading;
     fetch(url + "commentArea", { 
         method: "POST", 
         headers: { "Content-Type": "application/json; charset=utf-8"},

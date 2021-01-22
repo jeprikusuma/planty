@@ -6,12 +6,11 @@
         <!-- Image Section -->
         <div class="col-12 col-md-10 col-lg-6 p-0 align-items-between justify-content-center">
           <div class="d-flex overflow-hidden justify-content-center">
-            <img src="<?= BASEURL;?>/img/system/register.png" class="w-100" alt="" />
+            <img src="<?= BASEURL;?>/img/system/picture2.png" class="w-100 animate__animated animate__fadeIn animate" alt="" />
           </div>
           <div class="m-3 text-center text-secondary">
-            <h5>Play with your friends easly.</h5>
-            <p>Jepri Media is a platform for connecting people around the world
-              with one tap on your screen.</p>
+            <h5>Answer and ask whatever it is.</h5>
+            <p>Let's learn and share experiences with other plant community members.</p>
           </div>
         </div>
         <!-- Form Section -->
@@ -54,10 +53,10 @@
       </div>
     </div>
     <div class="bg bg-top position-absolute d-none d-md-block d-lg-block">
-      <img src="<?= BASEURL;?>/img/system/bg.png" alt="">
+      <img src="<?= BASEURL;?>/img/system/element.png" alt="">
     </div>
     <div class="bg bg-bot position-absolute d-none d-md-block d-lg-block">
-      <img src="<?= BASEURL;?>/img/system//bg.png" alt="">
+      <img src="<?= BASEURL;?>/img/system/element.png" alt="">
     </div>
   </section>
 

@@ -22,7 +22,7 @@
   <!-- Main contents -->
   <main>
     <!-- view -->
-     <div class="view-full fixed-top vw-100 vh-100 d-none flex-column justify-content-center align-items-center">
+     <div class="view-full mb-5 fixed-top vw-100 vh-100 d-none flex-column justify-content-center align-items-center">
       <!-- image full view -->
       <div class="main-full">
         <img src="" class="status-img rounded mb-3"   alt="">

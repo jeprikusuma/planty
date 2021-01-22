@@ -7,7 +7,7 @@
             <p class="mt-5">There are no post here...</p>
         <?php else : ?>
         <?php foreach($data["posts"] as $post): ?>
-          <div class="col-12 shadow-sm p-4 mb-4 bg-white rounded">
+          <div class="col-12 shadow-sm p-4 mb-4 bg-white rounded animate__animated animate__fadeInUp animate">
             <!-- header -->
                 <div class="d-flex align-items-start">
                   <img src="<?= BASEURL;?>/img/users/profile/<?=$post["profile"]?>" class="photo-status mt-1 rounded-circle" alt="">

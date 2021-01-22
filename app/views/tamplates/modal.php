@@ -10,7 +10,9 @@
           </button>
         </div>
         <div class="modal-body">
-          <strong>Jepri media</strong> is a social media that is used to share text status with other users around the world. Users can also view the profiles of specific people and make friends with them.
+          <strong>Planty</strong> is a platform that facilitates plant communities to learn, share experiences, communicate between communities and others.
+          <br><br>
+          <small>Version: v.1.1.1b /Beta Version </small>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>

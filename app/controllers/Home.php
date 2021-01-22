@@ -42,8 +42,8 @@ class Home extends Controller{
 
 		// view
 		$this->view('tamplates/header', $data);
-		$this->view('home/visit', $data);
-		$this->view('home/visitpost', $data);
+		$this->view('visit/index', $data);
+		$this->view('visit/visitpost', $data);
 		$this->view('tamplates/modal', $data);
 		$this->view('tamplates/footer');
 	}

@@ -1,7 +1,7 @@
 <?php 
 
-const BASEURL = "http://localhost/jepri-media/public";
+const BASEURL = "http://localhost/planty/public";
 const DB_HOST = 'localhost';
 const DB_USER = 'root';
 const DB_PASS = '';
-const DB_NAME = 'jepri-media';
+const DB_NAME = 'planty';
