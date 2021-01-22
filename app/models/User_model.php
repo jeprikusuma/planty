@@ -51,9 +51,10 @@ class User_model{
 	}
 
 	public function registerUser($post){
-		$query = "INSERT INTO ".$this->table.
-					" VALUES(
-						'', :name, :email, :password, :gender, :profile, :banner, 'USR', :active, :verify)";
+		$query = "INSERT INTO ".$this->table. 
+					" (name, email, password, gender, profile, banner, role, isActive, verify)
+					VALUES(
+						:name, :email, :password, :gender, :profile, :banner, 'USR', :active, :verify)";
 
 		$this->db->query($query);
 		$this->db->bind('name', $post['name']);

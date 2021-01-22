@@ -168,8 +168,9 @@ class Post_model{
 
     public function postingPost($post){
         $query = "INSERT INTO ".$this->table.
-					" VALUES(
-                        '', :content, :file, :user, :upload, :suspended, JSON_ARRAY(:like), JSON_ARRAY(:like) );";
+                    " (content, file, user, upload, suspended, likes, comments) 
+                    VALUES(
+                        :content, :file, :user, :upload, :suspended, JSON_ARRAY(:like), JSON_ARRAY(:like) );";
 
         date_default_timezone_set("Asia/Singapore");
 		$this->db->query($query);

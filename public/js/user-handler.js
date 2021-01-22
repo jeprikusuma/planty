@@ -14,8 +14,6 @@ const reloadHastag = () =>{
         hastags.forEach(hastag => {
             hastag.addEventListener("click",(e) => {
                 e.preventDefault();
-                status.innerHTML = loading;
-
                 fetch(e.target.href, { 
                     method: "POST", 
                     headers: { "Content-Type": "application/json; charset=utf-8"},
@@ -34,7 +32,6 @@ const reloadHastag = () =>{
 if(posting != null){
     posting.addEventListener('submit', (e) =>{
         e.preventDefault();
-        discover.innerHTML = loading;
 
         const data = new FormData();
         data.append("content", postingStatus.value);
@@ -58,7 +55,6 @@ if(posting != null){
     
     delate.addEventListener("click", (e) =>{
         e.preventDefault();
-        status.innerHTML = loading;
         
         fetch(e.target.href, { 
             method: "POST", 
@@ -81,7 +77,7 @@ if(posting != null){
         trending.forEach(trend => {
             trend.addEventListener("click",(e) => {
                 e.preventDefault();
-                status.innerHTML = loading;
+
                 link1 = e.target.href;
                 link2 = e.target.parentElement.parentElement.href;
                 link3 = e.target.parentElement.href;
@@ -111,7 +107,7 @@ if(posting != null){
 
 const searchClick = () =>{
     if(status != null){
-        status.innerHTML = loading;
+
         fetch(url + "search/" + search.value, { 
             method: "POST", 
             headers: { "Content-Type": "application/json; charset=utf-8"},
@@ -126,7 +122,6 @@ const searchClick = () =>{
 }
 
 const publicClick = () => {
-    discover.innerHTML = loading;
     fetch(url + "search", { 
         method: "POST", 
         headers: { "Content-Type": "application/json; charset=utf-8"},
@@ -144,7 +139,6 @@ const publicClick = () => {
 }
 
 const myClick = () => {
-    discover.innerHTML = loading;
     fetch(url + "mypost", { 
         method: "POST", 
         headers: { "Content-Type": "application/json; charset=utf-8"},
@@ -191,7 +185,6 @@ const unlike = (post)=>{
 }
 
 const toComment = (post)=>{
-    status.innerHTML = loading;
     fetch(url + "commentArea", { 
         method: "POST", 
         headers: { "Content-Type": "application/json; charset=utf-8"},

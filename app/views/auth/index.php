@@ -2,9 +2,9 @@
   <section class="auth">
     <div class="container d-flex p-0 p-lg-5 p-md-5 justify-content-center position-relative  overflow-hidden">
       <div
-        class="d-flex row shadow p-5 bg-white rounded justify-content-center justify-content-lg-between align-items-center">
+        class="d-flex row shadow col-12  p-5 bg-white rounded justify-content-center justify-content-lg-between align-items-center">
         <!-- Image Section -->
-        <div class="col-12 col-md-10 col-lg-6 p-0 align-items-between justify-content-center">
+        <div class="col-12 col-md-10 col-lg-6 p-0 align-items-between justify-content-center d-none d-lg-block d-md-block">
           <div class="d-flex overflow-hidden justify-content-center">
             <img src="<?= BASEURL;?>/img/system/picture1.png" class="w-100 animate__animated animate__fadeIn animate" alt="" />
           </div>

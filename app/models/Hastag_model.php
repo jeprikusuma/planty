@@ -19,8 +19,9 @@ class Hastag_model{
 
     public function newHastag($hastag, $post){
         $query = "INSERT INTO ".$this->table.
-					" VALUES(
-                        '', :hastag, :popularity, :lastUpdate, JSON_ARRAY(:post), :isSuspended);";
+                    "(hastag, popularity, lastUpdate, posts, isSuspended) 
+                    VALUES(
+                        :hastag, :popularity, :lastUpdate, JSON_ARRAY(:post), :isSuspended);";
 
         date_default_timezone_set("Asia/Singapore");
 		$this->db->query($query);
