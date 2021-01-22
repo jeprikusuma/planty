@@ -208,7 +208,7 @@ const toComment = (post)=>{
     });
 }
 
-const commentPost = (post) =>{
+const commentPost = (post) =>{``
     fetch(url + "commentPost", { 
         method: "POST", 
         headers: { "Content-Type": "application/json; charset=utf-8"},
