@@ -7,12 +7,13 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
   </script>
-  <script src="<?= BASEURL;?>/js/global.js"></script>
+  <script src="<?= BASEURL;?>/js/base.js"></script>
   <script src="<?= BASEURL;?>/js/app.js"></script>
   <script src="<?= BASEURL;?>/js/media.js"></script>
-  <script src="<?= BASEURL;?>/js/modal.js"></script>
-  <script src="<?= BASEURL;?>/js/user-handler.js"></script>
-  <script src="<?= BASEURL;?>/js/adminEvent.js"></script>
+  <script src="<?= BASEURL;?>/js/modal-handler.js"></script>
+  <script src="<?= BASEURL;?>/js/user-handler-13.js"></script>
+  <script src="<?= BASEURL;?>/js/chat-handler-15.js"></script>
+  <script src="<?= BASEURL;?>/js/admin-handler-1.js"></script>
 </body>
 
 </html>

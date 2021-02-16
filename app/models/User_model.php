@@ -52,9 +52,9 @@ class User_model{
 
 	public function registerUser($post){
 		$query = "INSERT INTO ".$this->table. 
-					" (name, email, password, gender, profile, banner, role, isActive, verify)
+					" (name, email, password, gender, profile, banner, role, isActive, verify, online)
 					VALUES(
-						:name, :email, :password, :gender, :profile, :banner, 'USR', :active, :verify)";
+						:name, :email, :password, :gender, :profile, :banner, 'USR', :active, :verify, NULL)";
 
 		$this->db->query($query);
 		$this->db->bind('name', $post['name']);
@@ -85,16 +85,28 @@ class User_model{
 	
 	public function editUser($post){
 		$query = "UPDATE ".$this->table."
-					SET name = :name, password = :password, gender = :gender, profile = :profile, banner = :banner
+					SET name = :name, gender = :gender, profile = :profile, banner = :banner
 					WHERE email = :email;";
 
 		$this->db->query($query);
 		$this->db->bind('name', $post['name']);
 		$this->db->bind('email', $post['email']);
-		$this->db->bind('password', $post['password']);
 		$this->db->bind('gender', $post['gender']);
 		$this->db->bind('profile', $post['profile-photo']);
 		$this->db->bind('banner', $post['banner-photo']);
+		$this->db->execute();
+
+		return $this->db->rowCount();
+	}
+
+	public function resetPassword($post){
+		$query = "UPDATE ".$this->table."
+					SET password = :password
+					WHERE email = :email;";
+
+		$this->db->query($query);
+		$this->db->bind('email', $post['email']);
+		$this->db->bind('password', $post['password']);
 		$this->db->execute();
 
 		return $this->db->rowCount();
@@ -156,4 +168,36 @@ class User_model{
         
         return $this->db->rowCount();
     }
+	
+	public function setOnline($user){
+		$query = "UPDATE ".$this->table."
+		SET online = :online
+		WHERE email = :user";
+				 
+		date_default_timezone_set("Asia/Singapore");
+		$this->db->query($query);
+		$this->db->bind('user', $user);
+		$this->db->bind('online', date('Y/m/d H:i:s'));
+		$this->db->execute();
+	}
+
+	public function onlineUsers($user){
+		$query = "SELECT id, name, email, profile FROM ".$this->table." 
+		WHERE online BETWEEN :mintolerance AND :maxtolerance AND name != 'Admin'
+		ORDER BY FIELD(email, :user) DESC;";
+				 
+		date_default_timezone_set("Asia/Singapore");
+		$maxtolerance = date("Y-m-d H:i:s");
+		$timestamp = strtotime($maxtolerance);
+		$time = $timestamp - 3;
+		$mintolerance = date("Y-m-d H:i:s", $time);
+
+		$this->db->query($query);
+		$this->db->bind('mintolerance', $mintolerance);
+		$this->db->bind('maxtolerance', $maxtolerance);
+		$this->db->bind('user', $user);
+		$this->db->execute();
+
+		return $this->db->resultSet();
+	}
 }

@@ -21,9 +21,9 @@
                 <div class="mt-4 d-flex justify-content-start">
                   <p><?=$post["content"]?></p>
                 </div>
-                <?php if($data["nav"] == "my" : ?>
+                <?php if ($data["nav"] == "my") : ?>
                 <div class="mt-4 d-flex justify-content-end">
-                  <a href="#" class="btn btn-danger" onclick="costumModalSet('danger', 'Delete', 'delete this post','<?= BASEURL;?>/Home/deletePost/<?=$post['id']?>')" data-toggle="modal" data-target="#costum-modal">Delete</a>
+                  <a href="#" class="btn btn-danger" onclick="costumModalSet('danger', 'Delete', 'delete this post ?','<?= BASEURL;?>/Home/deletePost/<?=$post['id']?>')" data-toggle="modal" data-target="#costum-modal">Delete</a>
                 </div>
                 <?php endif; ?>
           </div>

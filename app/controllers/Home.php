@@ -7,7 +7,7 @@ class Home extends Controller{
 		}
 		// menyiapkan data user
 		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
-		$data['posts'] = $this->model('Post_model')->postsIsSuspended(0);
+		$data['posts'] = $this->model('Post_model')->postsIsSuspended(0, $data['user']['id']);
 		$data['trending'] = $this->model('Hastag_model')->trendingHastag();
 		$data['header'] = 'Home';
 		$data['nav'] = 'public';
@@ -30,6 +30,7 @@ class Home extends Controller{
 		}
 
 		// menyiapkan data user
+		$thisUser = $this->model('User_model')->findUser($_SESSION['user']);
 		$data['user'] = $this->model('User_model')->findUserById($id);
 		if(!$data['user'] || 
 			$data['user']['name'] == 'Admin' || 
@@ -37,8 +38,8 @@ class Home extends Controller{
 			header('Location:'.BASEURL.'/Home');
 		}
 
-		$data['posts'] = $this->model('Post_model')->searchPosts($data['user']['name']);
-		$data['header'] = 'Home';
+		$data['posts'] = $this->model('Post_model')->searchPosts($data['user']['name'], $thisUser['id']);
+		$data['header'] = $data['user']['name'];
 
 		// view
 		$this->view('tamplates/header', $data);
@@ -48,19 +49,25 @@ class Home extends Controller{
 		$this->view('tamplates/footer');
 	}
 
-	public function search($keyword = null){
+	public function search(){
+		$keyword = null;
+
 		$_POST = json_decode(file_get_contents('php://input'), true);
 		if(!isset($_POST['status'])){
 			header('Location:'.BASEURL.'/Home');
 		}
-		if($keyword){
-			$data["posts"] = $this->model('Post_model')->searchPosts($keyword);
-			$data['search'] = ($keyword);
-		}else{
-			$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
-		}
 
 		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
+
+		if(isset($_POST['keyword'])){
+			$keyword = $_POST['keyword'];	
+		}
+		if($keyword){
+			$data["posts"] = $this->model('Post_model')->searchPosts($keyword, $data['user']['id']);
+			$data['search'] = ($keyword);
+		}else{
+			$data["posts"] = $this->model('Post_model')->postsIsSuspended(0, $data['user']['id']);
+		}
 
 		if(isset($_POST['nav'])){
 			$data['nav'] = $_POST['nav'];
@@ -69,25 +76,46 @@ class Home extends Controller{
 			$this->view('home/status', $data);
 		}		
 	}
+
+	public function getPostingInput(){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(!isset($_POST['status'])){
+			header('Location:'.BASEURL.'/Home');
+		}
+		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
+		$data['discover'] = true;
+		
+		$this->view('home/main', $data);
+	}
+
+	public function getAside(){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(!isset($_POST['status'])){
+			header('Location:'.BASEURL.'/Home');
+		}
+		$data['trending'] = $this->model('Hastag_model')->trendingHastag();
+
+		$this->view('home/aside', $data);
+	}
 	
 	public function hastag($hastag = null){
 		$_POST = json_decode(file_get_contents('php://input'), true);
 		if(!isset($_POST['hastag'])){
 			header('Location:'.BASEURL.'/Home');
 		}
+
+		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
 		if($hastag){
 			$hastagData = $this->model('Hastag_model')->hastagPosts($hastag);
 			$hastagData = substr($hastagData["posts"], 1, -1);
 			$hastagData=array_map('intval', explode(',', $hastagData));
 			$hastagData = implode("','",$hastagData);
 
-			$data["posts"]  = $this->model('Post_model')->multiPostsData($hastagData);
+			$data["posts"]  = $this->model('Post_model')->multiPostsData($hastagData, $data['user']['id']);
 			$data['search'] = ('#'.$hastag);
 		}else{
-			$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
+			$data["posts"] = $this->model('Post_model')->postsIsSuspended(0, $data['user']['id']);
 		}
-
-		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
 
 		if(isset($_POST['nav'])){
 			$data['nav'] = $_POST['nav'];
@@ -125,6 +153,34 @@ class Home extends Controller{
 		$this->view('home/statusmore', $data);
 	}
 
+	public function mark(){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(!isset($_POST['status'])){
+			header('Location:'.BASEURL.'/Home');
+		}
+
+		$user= $this->model('User_model')->findUser( $_SESSION["user"]);
+		$this->model('Post_model')->postMark($_POST['mark'], $user['id']);
+		$data = $this->model('Post_model')->singlePost($_POST['mark']);
+		$data["user"] = $user;
+
+		$this->view('home/statusmore', $data);
+	}
+
+	public function unmark(){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(!isset($_POST['status'])){
+			header('Location:'.BASEURL.'/Home');
+		}
+
+		$user = $this->model('User_model')->findUser( $_SESSION["user"]);
+		$this->model('Post_model')->postUnmark($_POST['mark'], $user['id']);
+		$data = $this->model('Post_model')->singlePost($_POST['mark']);;
+
+		$data["user"] = $user;
+		$this->view('home/statusmore', $data);
+	}
+
 	public function commentArea(){
 		$_POST = json_decode(file_get_contents('php://input'), true);
 		if(!isset($_POST['status'])){
@@ -142,7 +198,7 @@ class Home extends Controller{
 		if(!isset($_POST['status'])){
 			header('Location:'.BASEURL.'/Home');
 		}
-		$user = $this->model('User_model')->findUser( $_SESSION["user"]);
+		$user = $this->model('User_model')->findUser($_SESSION["user"]);
 
 		$data["name"] = $user["name"];
 		$data["img"] = $user["profile"];
@@ -183,6 +239,48 @@ class Home extends Controller{
 		
 	}
 
+	public function marked(){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+
+		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
+		$data["posts"] = $this->model('Post_model')->markedPost($data['user']["id"]);
+
+		if(!isset($_POST['status'])){
+			if(Session::role() != 'User'){
+				header('Location:'.BASEURL.'/Auth/register');
+			}
+			// menyiapkan data user
+			$data["nav"] = 'public';
+			$data['header'] = 'Home';
+			// view
+			$this->view('tamplates/header', $data);
+			$this->view('home/index', $data);
+			$this->view('home/publicpost', $data);
+			$this->view('tamplates/modal', $data);
+			$this->view('tamplates/footer');
+		}else{
+			$data["nav"] = "mark";
+			// view
+			$this->view('home/discover', $data);
+		}
+		
+	}
+
+	public function hidePost($id){
+		$_POST = json_decode(file_get_contents('php://input'), true);
+		if(!isset($_POST['delete'])){
+			header('Location:'.BASEURL.'/Home');
+		}
+
+		$data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
+		$this->model('Post_model')->hidePost($id, $data['user']['id']);
+		
+		$data["posts"] = $this->model('Post_model')->postsIsSuspended(0, $data['user']['id']);
+		$data["nav"] = "public";
+		$this->view('home/status', $data);
+	}
+
+
 	public function editProfile(){
 		if(!isset($_POST["editprofile"])){
 			header('Location:'.BASEURL.'/Home');
@@ -191,16 +289,7 @@ class Home extends Controller{
 		// perubahan user
 		$user = $this->model('User_model')->findUser( $_SESSION["user"]);
 
-		// cek perubahan penting
-		// cek perubahan password
-		if($_POST["password"] != $user["password"]){
-			if($_POST["password"] == $_POST["confirm-password"]){
-				$_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
-			}else{
-				Flasher::setFlash('Password not match!', 'danger');
-				header('Location:'.BASEURL.'/Home');
-			}
-		}		
+		// cek perubahan penting		
 		// cek & upload foto profil
 		$profileUploaded = false;
 		if($_FILES["profile-photo"]["name"] != ""){
@@ -365,7 +454,7 @@ class Home extends Controller{
 		}
 
 		$data['user'] = $user;
-		$data["posts"] = $this->model('Post_model')->postsIsSuspended(0);
+		$data["posts"] = $this->model('Post_model')->postsIsSuspended(0, $user['id']);
 		$data["nav"] = "public";
 		$this->view('home/discover', $data);
 	}

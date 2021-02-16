@@ -40,7 +40,7 @@
               <label for="gender">Gender</label>
               <select class="form-control" id="gender" name="gender">
                 <option selected  value="male">Male</option>
-                <option value="famale">Famale</option>
+                <option value="famale">Female</option>
               </select>
               <div class="invalid-feedback"> Please enter your email! </div>
             </div>

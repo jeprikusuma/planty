@@ -2,7 +2,8 @@
 const toHome = document.querySelector("#go-home"),
       toUser = document.querySelector("#go-user"),
       toPost = document.querySelector("#go-post"),
-      toTrending= document.querySelector("#go-trending");
+      toTrending = document.querySelector("#go-trending"),
+      toReport = document.querySelector("#go-report");
 const container = document.querySelector("#main-content");
 
 let searchUser = document.querySelector("#search-user"),
@@ -12,13 +13,16 @@ let searchUser = document.querySelector("#search-user"),
     usersDiscover = document.querySelector("#users-discover"),
     trendingDiscover = document.querySelector("#trending-discover"),
     trendingResult = document.querySelector("#trending-result"),
+    reportDiscover = document.querySelector("#report-discover"),
+    reportResult = document.querySelector("#report-result"),
     postsResult = document.querySelector("#posts-result"),
     postsDiscover = document.querySelector("#posts-discover"),
     buttons = document.querySelector("#costumLink");
 
 let onNav = "all",
     onNavPosts = "all",
-    onNavTrend = "all";
+    onNavTrend = "all",
+    onNavReport = "system";
 
 if(toHome != null){
     toHome.addEventListener('click', (e) => {
@@ -89,6 +93,25 @@ if(toHome != null){
             searchTrending = document.querySelector("#search-trending");
             trendingDiscover = document.querySelector("#trending-discover");
             trendingResult = document.querySelector("#trending-result")
+            buttons = document.querySelector("#costumLink"); 
+        })
+    })
+
+    toReport.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        fetch(baseUrl + "Report/show", { 
+            method: "POST", 
+            headers: { "Content-Type": "application/json; charset=utf-8"},
+            body: JSON.stringify({
+                "aside": true
+            })
+        })
+        .then(response => response.text())
+        .then(data => {
+            container.innerHTML = data;
+            reportDiscover = document.querySelector("#report-discover");
+            reportResult = document.querySelector("#report-result")
             buttons = document.querySelector("#costumLink"); 
         })
     })
@@ -172,6 +195,25 @@ const trendingNav = (to) => {
         trendingDiscover = document.querySelector("#trending-discover");
         trendingDiscover = document.querySelector("#trending-discover");
         searchTrending = document.querySelector("#search-trending");
+    });
+}
+
+const reportNav = (to) => {
+    onNavReport = to;
+    fetch(baseUrl + "report/show/" + to, { 
+        method: "POST", 
+        headers: { "Content-Type": "application/json; charset=utf-8"},
+        body: JSON.stringify({
+            "aside" : true,
+            "nav": true
+        })
+    })
+    .then(response => response.text())
+    .then(data => {
+        reportDiscover.innerHTML = data;
+        reportResult = document.querySelector("#report-result");
+        reportDiscover = document.querySelector("#report-discover");
+        reportDiscover = document.querySelector("#report-discover");
     });
 }
 

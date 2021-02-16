@@ -37,6 +37,11 @@
             <p class="my-auto ml-3 text-left">Trending</p>
           </a>
           <hr>
+          <a href="" class="d-flex text-dark align-items-center text-center" id = "go-report">
+            <i class="fas fa-bug"></i>
+            <p class="my-auto ml-3 text-left">Report</p>
+          </a>
+          <hr>
           <a href="#" class="d-flex align-items-center text-danger text-center" data-toggle="modal" data-target="#single-logout">
             <i class="fas fa-sign-out-alt"></i>
             <p class="my-auto ml-3">Logout</p>

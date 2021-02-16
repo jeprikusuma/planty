@@ -22,3 +22,16 @@ const costumModalSet = (color, title, mess, link)=>{
     cosLink.href = link;
     cosLink.innerHTML = title;
 }
+
+
+const costumModalReport = (title, mess, link)=>{
+    const cosTitle =  document.querySelector("#costum-report-for"),
+        cosMess =  document.querySelector("#custom-report-des"),
+        cosLink =  document.querySelector("#costum-report-send"),
+        cosInput = document.querySelector("#custom-report-input");
+
+    cosInput.value = "";
+    cosTitle.innerHTML = title;
+    cosMess.innerHTML = mess;
+    cosLink.href = link;
+}

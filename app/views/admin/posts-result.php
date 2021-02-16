@@ -31,11 +31,11 @@
                   </div>
                 <div class="mt-4 d-flex justify-content-end">
                 <?php if($post["suspended"] == 0) : ?>
-                   <a href="#" class="btn btn-warning text-white mr-1" onclick="costumModalSet('warning', 'Suspend', 'Suspend post by  <?= $post['name'] ?>','<?= BASEURL;?>/Admin/setSuspendPost/<?= $post['id'] ?>/sus')" data-toggle="modal" data-target="#costum-modal">Suspend</a>
+                   <a href="#" class="btn btn-warning text-white mr-1" onclick="costumModalSet('warning', 'Suspend', 'Suspend post by  <?= $post['name'] ?> ?','<?= BASEURL;?>/Admin/setSuspendPost/<?= $post['id'] ?>/sus')" data-toggle="modal" data-target="#costum-modal">Suspend</a>
                 <?php else : ?>
-                    <a href="#" class="btn btn-primary text-white mr-1" onclick="costumModalSet('primary', 'Unsuspend', 'Unsuspend post by <?= $post['name'] ?>','<?= BASEURL;?>/Admin/setSuspendPost/<?= $post['id'] ?>/un')" data-toggle="modal" data-target="#costum-modal">Unsuspend</a>
+                    <a href="#" class="btn btn-primary text-white mr-1" onclick="costumModalSet('primary', 'Unsuspend', 'Unsuspend post by <?= $post['name'] ?> ?','<?= BASEURL;?>/Admin/setSuspendPost/<?= $post['id'] ?>/un')" data-toggle="modal" data-target="#costum-modal">Unsuspend</a>
                 <?php endif; ?>
-                   <a href="#" class="btn btn-danger" onclick="costumModalSet('danger', 'Delete', 'Delete post by <?= $post['name'] ?>','<?= BASEURL;?>/Admin/deletePost/<?= $post['id'] ?>')" data-toggle="modal" data-target="#costum-modal">Delete</a>
+                   <a href="#" class="btn btn-danger" onclick="costumModalSet('danger', 'Delete', 'Delete post by <?= $post['name'] ?>','<?= BASEURL;?>/Admin/deletePost/<?= $post['id'] ?> ?')" data-toggle="modal" data-target="#costum-modal">Delete</a>
                 </div>
           </div>
         <?php endforeach; ?>

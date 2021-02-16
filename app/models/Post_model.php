@@ -16,9 +16,10 @@ class Post_model{
  		return $this->db->single();
     }
 
-    public function multiPostsData($arr){
+    public function multiPostsData($arr, $userId){
         $query = "SELECT ".$this->tableUser.".name as name, 
                 ".$this->tableUser.".id as user, 
+                ".$this->tableUser.".email as email,
                 ".$this->tableUser.".profile as profile, 
                 ".$this->table.".content as content,
                 ".$this->table.".file as file,
@@ -26,14 +27,16 @@ class Post_model{
                 ".$this->table.".id as id,
                 ".$this->table.".likes as likes,
                 ".$this->table.".comments as comments,
-                ".$this->table.".comments as comments,
+                ".$this->table.".mark as mark,
                 DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                     FROM `". $this->table ."`
                     INNER JOIN ".$this->tableUser."
                     ON ". $this->table .".user=".$this->tableUser.".id
                     WHERE ". $this->table .".id IN ('$arr')
+                    AND JSON_SEARCH(hidden, 'one', :userId) IS NULL
                     ORDER BY ".$this->table.".upload DESC;";
         $this->db->query($query);
+        $this->db->bind('userId', $userId);
 
  		return $this->db->resultSet();
     }
@@ -41,6 +44,7 @@ class Post_model{
     public function allPosts(){
         $query = "SELECT ".$this->tableUser.".name as name, 
                         ".$this->tableUser.".id as user, 
+                        ".$this->tableUser.".email as email,
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
                         ".$this->table.".file as file,
@@ -48,19 +52,22 @@ class Post_model{
                         ".$this->table.".id as id,
                         ".$this->table.".likes as likes,
                         ".$this->table.".comments as comments,
+                        ".$this->table.".mark as mark,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                             FROM `". $this->table ."`
                             INNER JOIN ".$this->tableUser."
                             ON ". $this->table .".user=".$this->tableUser.".id
                             ORDER BY ".$this->table.".upload DESC;";
 		$this->db->query($query);
+        
 
  		return $this->db->resultSet();
     }
 
-    public function postsIsSuspended($set){
+    public function postsIsSuspended($set, $userId){
         $query = "SELECT ".$this->tableUser.".name as name, 
                         ".$this->tableUser.".id as user, 
+                        ".$this->tableUser.".email as email,
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
                         ".$this->table.".file as file,
@@ -68,21 +75,25 @@ class Post_model{
                         ".$this->table.".id as id,
                         ".$this->table.".likes as likes,
                         ".$this->table.".comments as comments,
+                        ".$this->table.".mark as mark,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                             FROM `". $this->table ."`
                             INNER JOIN ".$this->tableUser."
                             ON ". $this->table .".user=".$this->tableUser.".id
-                            WHERE suspended=:suspend
+                            WHERE suspended=:suspend 
+                            AND JSON_SEARCH(hidden, 'one', :userId) IS NULL
                             ORDER BY ".$this->table.".upload DESC;";
 		$this->db->query($query);
         $this->db->bind('suspend', $set);
-
+        $this->db->bind('userId', $userId);
+        
  		return $this->db->resultSet();
     }
 
-    public function searchPosts($keyword){
+    public function searchPosts($keyword, $userId){
         $query = "SELECT ".$this->tableUser.".name as name, 
                         ".$this->tableUser.".id as user, 
+                        ".$this->tableUser.".email as email,
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
                         ".$this->table.".file as file,
@@ -90,16 +101,19 @@ class Post_model{
                         ".$this->table.".id as id,
                         ".$this->table.".likes as likes,
                         ".$this->table.".comments as comments,
+                        ".$this->table.".mark as mark,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                             FROM `". $this->table ."`
                             INNER JOIN ".$this->tableUser."
                             ON ". $this->table .".user=".$this->tableUser.".id
-                            WHERE (suspended=:suspend) 
+                            WHERE (suspended=:suspend)
+                            AND JSON_SEARCH(hidden, 'one', :userId) IS NULL 
                             AND (name LIKE CONCAT('%', :keyword , '%'))
                             ORDER BY ".$this->table.".upload DESC;";
 		$this->db->query($query);
         $this->db->bind('suspend', 0);
         $this->db->bind('keyword', $keyword);
+        $this->db->bind('userId', $userId);
 
  		return $this->db->resultSet();
     }
@@ -107,6 +121,7 @@ class Post_model{
     public function searchPostsAll($keyword){
         $query = "SELECT ".$this->tableUser.".name as name, 
                         ".$this->tableUser.".id as user, 
+                        ".$this->tableUser.".email as email,
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
                         ".$this->table.".file as file,
@@ -114,6 +129,7 @@ class Post_model{
                         ".$this->table.".id as id,
                         ".$this->table.".likes as likes,
                         ".$this->table.".comments as comments,
+                        ".$this->table.".mark as mark,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                             FROM `". $this->table ."`
                             INNER JOIN ".$this->tableUser."
@@ -128,12 +144,15 @@ class Post_model{
         
     public function postById($id){
         $query = "SELECT ".$this->table.".id as id,
-                        ".$this->tableUser.".name as name, 
+                        ".$this->tableUser.".name as name,
+                        ".$this->tableUser.".id as userComment, 
+                        ".$this->tableUser.".email as email, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
                         ".$this->table.".file as file,
                         ".$this->table.".likes as likes,
                         ".$this->table.".comments as comments,
+                        ".$this->table.".mark as mark,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                             FROM `". $this->table ."`
                             INNER JOIN ".$this->tableUser."
@@ -146,14 +165,40 @@ class Post_model{
  		return $this->db->resultSet();
     }
 
-    public function singlePost($id){
+    public function markedPost($user){
         $query = "SELECT ".$this->table.".id as id,
-                        ".$this->tableUser.".name as name, 
+                        ".$this->tableUser.".name as name,
+                        ".$this->tableUser.".id as userComment, 
+                        ".$this->tableUser.".email as email, 
                         ".$this->tableUser.".profile as profile, 
                         ".$this->table.".content as content,
                         ".$this->table.".file as file,
                         ".$this->table.".likes as likes,
                         ".$this->table.".comments as comments,
+                        ".$this->table.".mark as mark,
+                        DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
+                            FROM `". $this->table ."`
+                            INNER JOIN ".$this->tableUser."
+                            ON ". $this->table .".user=".$this->tableUser.".id
+                            WHERE JSON_SEARCH(mark, 'one', :user) IS NOT NULL
+                            ORDER BY ".$this->table.".upload DESC;";
+		$this->db->query($query);
+        $this->db->bind('user', $user);
+
+ 		return $this->db->resultSet();
+    }
+
+    public function singlePost($id){
+        $query = "SELECT ".$this->table.".id as id,
+                        ".$this->tableUser.".name as name,
+                        ".$this->tableUser.".email as email,
+                        ".$this->tableUser.".id as userComment,  
+                        ".$this->tableUser.".profile as profile, 
+                        ".$this->table.".content as content,
+                        ".$this->table.".file as file,
+                        ".$this->table.".likes as likes,
+                        ".$this->table.".comments as comments,
+                        ".$this->table.".mark as mark,
                         DATE_FORMAT(".$this->table.".upload, '%M %Y, %d %k:%i') as upload
                             FROM `". $this->table ."`
                             INNER JOIN ".$this->tableUser."
@@ -168,16 +213,16 @@ class Post_model{
 
     public function postingPost($post){
         $query = "INSERT INTO ".$this->table.
-                    " (content, file, user, upload, suspended, likes, comments) 
+                    " (content, file, user, upload, suspended, likes, comments, hidden, mark) 
                     VALUES(
-                        :content, :file, :user, :upload, :suspended, JSON_ARRAY(:like), JSON_ARRAY(:like) );";
+                        :content, :file, :user, :upload, :suspended, JSON_ARRAY(:like), JSON_ARRAY(:like), JSON_ARRAY(:like), JSON_ARRAY(:like));";
 
         date_default_timezone_set("Asia/Singapore");
 		$this->db->query($query);
         $this->db->bind('content', $post['content']);
         $this->db->bind('file', $post['file']);
         $this->db->bind('user', $post['user']);
-		$this->db->bind('upload', date('Y/m/d H:i'));
+		$this->db->bind('upload', date('Y/m/d H:i:s'));
         $this->db->bind('suspended', 0);
         $this->db->bind('like', 0);
         $this->db->execute();
@@ -275,6 +320,33 @@ class Post_model{
 
 		return $this->db->rowCount();
     }
+    
+    public function postMark($id, $user){
+        $query = "UPDATE ".$this->table."
+                  SET mark = JSON_MERGE(mark, JSON_ARRAY(:user))
+                  WHERE id = :id AND JSON_SEARCH(mark, 'one', :user) IS NULL";
+                    
+		$this->db->query($query);
+        $this->db->bind('id', $id);
+        $this->db->bind('user', $user);
+		$this->db->execute();
+
+		return $this->db->rowCount();
+    }
+
+    public function postUnmark($id, $user){
+        $query = "UPDATE ".$this->table."
+                  SET mark = JSON_REMOVE(
+                      mark, JSON_UNQUOTE(JSON_SEARCH(mark, 'one', :user)))
+                  WHERE id = :id AND JSON_SEARCH(mark, 'one', :user) IS NOT NULL";
+                           
+		$this->db->query($query);
+        $this->db->bind('id', $id);
+        $this->db->bind('user', $user);
+		$this->db->execute();
+
+		return $this->db->rowCount();
+    }
 
     public function postComment($id, $data){
         $query = "UPDATE ".$this->table." 
@@ -287,9 +359,22 @@ class Post_model{
         $this->db->bind('name', $data["name"]);
         $this->db->bind('img', $data["img"]);
         $this->db->bind('comment', $data["comment"]);
-        $this->db->bind('upload', date('Y/m/d H:i'));
+        $this->db->bind('upload', date('Y/m/d H:i:s'));
         $this->db->execute();
          
         return $this->db->rowCount();
+    }
+
+    public function hidePost($id, $user){
+        $query = "UPDATE ".$this->table."
+                  SET hidden = JSON_MERGE(hidden, JSON_ARRAY(:user))
+                  WHERE id = :id AND JSON_SEARCH(hidden, 'one', :user) IS NULL";
+                    
+		$this->db->query($query);
+        $this->db->bind('id', $id);
+        $this->db->bind('user', $user);
+		$this->db->execute();
+
+		return $this->db->rowCount();
     }
 }

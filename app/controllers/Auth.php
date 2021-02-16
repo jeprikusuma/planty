@@ -145,6 +145,43 @@ class Auth extends Controller{
         $this->view('tamplates/footer');
     }
 
+    public function reset(){
+        if(!isset($_SESSION['user'])){
+            $this->logout();
+        }
+
+        if(isset($_POST["reset"])){
+            // validasi data
+            if( isset($_POST["password"]) && 
+                isset($_POST["confirm-password"])
+                ){
+                    if($_POST['password'] == $_POST['confirm-password']){
+                        $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
+                        $_POST["email"] = $_SESSION['user'];
+                        
+                        if($this->model("User_model")->resetPassword($_POST) > 0){
+                            header('Location:'.BASEURL.'/Home');
+                            Flasher::setFlash('Password changed successfully!', 'success');
+                        }else{
+                            Flasher::setFlash('Reset password failed!', 'danger');
+                        }
+
+                    }else{
+                        Flasher::setFlash('Confirm password not match!', 'danger');
+                    }
+
+            }else{
+                Flasher::setFlash('Failed to reset!', 'danger');
+            }
+            
+        }
+
+        $data['header'] = 'Reset Password';
+        $this->view('tamplates/header', $data);
+        $this->view('auth/resetpassword');
+        $this->view('tamplates/footer');
+    }
+
     public function verify($id = null, $code = null){   
         $linkId = $id;
         if($id != null){
@@ -152,8 +189,10 @@ class Auth extends Controller{
             $user = $this->model("User_model")->findUserById($id);
             if(!$user){
                 $this->logout();
-            }else if($_SESSION['user'] != $user['email']){
-                $this->logout();
+            }else if(isset($_SESSION['user'])){
+                if($_SESSION['user'] != $user['email']){
+                    $this->logout();
+                }
             }
         }else{
             $this->logout();
@@ -197,13 +236,13 @@ class Auth extends Controller{
 		$mail->SMTPSecure = "tls";
 		$mail->Port       = 587;
 		$mail->Host       = "smtp.gmail.com";
-		$mail->Username   = "nineblog11@gmail.com";
-		$mail->Password   = "jeprik01";
+		$mail->Username   = "jeprikusuma13@gmail.com";
+		$mail->Password   = "adminplanty13";
 
 		$mail->IsHTML(true);
 		$mail->AddAddress($user["email"], $user["name"]);
-		$mail->SetFrom("admin@planty.com", "Planty");
-		$mail->AddReplyTo("no-reply@gmail.com", "no-reply");
+		$mail->SetFrom("jeprikusuma13@gmail.com", "Planty");
+		$mail->AddReplyTo("jeprikusuma13@gmail.com", "jepri");
 		$mail->Subject = "Planty: Verify Account";
 		$content = '
 		<html>

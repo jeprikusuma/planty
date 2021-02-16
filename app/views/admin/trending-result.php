@@ -18,9 +18,9 @@
         </div>
         <div class="button">
                  <?php if($trend["isSuspended"] == 0) : ?>
-                   <a href="#" class="btn btn-warning" onclick="costumModalSet('warning', 'Suspend', 'Suspend hastag #<?= $trend['hastag'] ?>','<?= BASEURL;?>/Admin/setSuspendHastag/<?= $trend['id'] ?>/sus')" data-toggle="modal" data-target="#costum-modal">Suspend</a>
+                   <a href="#" class="btn btn-warning" onclick="costumModalSet('warning', 'Suspend', 'Suspend hastag #<?= $trend['hastag'] ?> ?','<?= BASEURL;?>/Admin/setSuspendHastag/<?= $trend['id'] ?>/sus')" data-toggle="modal" data-target="#costum-modal">Suspend</a>
                 <?php else : ?>
-                    <a href="#" class="btn btn-primary text-white mr-1" onclick="costumModalSet('primary', 'Unsuspend', 'Unsuspend hastag #<?= $trend['hastag'] ?>','<?= BASEURL;?>/Admin/setSuspendHastag/<?= $trend['id'] ?>/un')" data-toggle="modal" data-target="#costum-modal">Unsuspend</a>
+                    <a href="#" class="btn btn-primary text-white mr-1" onclick="costumModalSet('primary', 'Unsuspend', 'Unsuspend hastag #<?= $trend['hastag'] ?> ?','<?= BASEURL;?>/Admin/setSuspendHastag/<?= $trend['id'] ?>/un')" data-toggle="modal" data-target="#costum-modal">Unsuspend</a>
                 <?php endif; ?>
         </div>
         </div>

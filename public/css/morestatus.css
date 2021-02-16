@@ -1,5 +1,6 @@
-.like{
+.like, .comment, .s-mark{
     color: rgb(123, 123, 123);
+    cursor: pointer;
 }
 
 .like:hover{
@@ -11,12 +12,13 @@
     color: rgb(211, 52, 52);
 }
 
-.comment{
-    color: rgb(123, 123, 123);
-}
-.comment:hover{
+.comment:hover, .s-mark:hover{
     transition: .3s;
     color: rgb(28, 28, 28);
+}
+
+.s-marked{
+    color: black;
 }
 .photo-comment{
     object-fit: cover;

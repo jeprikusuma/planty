@@ -20,13 +20,13 @@
                 <div class="d-flex align-items-center justify-content-end mt-3 mt-md-0 mt-lg-0">
                 <?php if($user["name"] != "Admin") : ?>
                     <?php if($user["isActive"] == 1) : ?>
-                        <a href="#" class="btn btn-warning text-white mr-1" class="btn btn-primary text-white mr-1" onclick="costumModalSet('warning', 'Suspend', 'Suspend <?= $user['name'] ?>','<?= BASEURL;?>/Admin/setSuspend/<?= $user['id'] ?>/sus')" data-toggle="modal" data-target="#costum-modal">Suspend</a>
+                        <a href="#" class="btn btn-warning text-white mr-1" class="btn btn-primary text-white mr-1" onclick="costumModalSet('warning', 'Suspend', 'Suspend <?= $user['name'] ?> ?','<?= BASEURL;?>/Admin/setSuspend/<?= $user['id'] ?>/sus')" data-toggle="modal" data-target="#costum-modal">Suspend</a>
                     <?php else: ?>
-                        <a href="#" class="btn btn-primary text-white mr-1" onclick="costumModalSet('primary', 'Unsuspend', 'Unsuspend <?= $user['name'] ?>','<?= BASEURL;?>/Admin/setSuspend/<?= $user['id'] ?>/un')" data-toggle="modal" data-target="#costum-modal">Unsuspend</a>
+                        <a href="#" class="btn btn-primary text-white mr-1" onclick="costumModalSet('primary', 'Unsuspend', 'Unsuspend <?= $user['name'] ?> ?','<?= BASEURL;?>/Admin/setSuspend/<?= $user['id'] ?>/un')" data-toggle="modal" data-target="#costum-modal">Unsuspend</a>
                     <?php endif; ?>
-                        <a href="#" class="btn btn-danger" onclick="costumModalSet('danger','Delete', 'Delete <?= $user['name'] ?>','<?= BASEURL;?>/Admin/deleteUser/<?= $user['id'] ?>')" data-toggle="modal" data-target="#costum-modal">Delete</a>
+                        <a href="#" class="btn btn-danger" onclick="costumModalSet('danger','Delete', 'Delete <?= $user['name'] ?> ?','<?= BASEURL;?>/Admin/deleteUser/<?= $user['id'] ?>')" data-toggle="modal" data-target="#costum-modal">Delete</a>
                 <?php endif; ?>
                 </div>
-                          </div>
+            </div>
           <?php endforeach; ?>
           <?php endif; ?>

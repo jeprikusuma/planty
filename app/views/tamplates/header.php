@@ -7,8 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="<?= BASEURL;?>/css/main.css">
   <link rel="stylesheet" href="<?= BASEURL;?>/css/media.css">
-  <link rel="stylesheet" href="<?= BASEURL;?>/css/status.css">
+  <link rel="stylesheet" href="<?= BASEURL;?>/css/allnav.css">
+  <link rel="stylesheet" href="<?= BASEURL;?>/css/morestatus.css">
   <link rel="stylesheet" href="<?= BASEURL;?>/css/theme.css">
+  <link rel="stylesheet" href="<?= BASEURL;?>/css/chat.css">
   <link rel="stylesheet" href="<?= BASEURL;?>/css/landing.css">  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 

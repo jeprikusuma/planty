@@ -88,7 +88,7 @@ class Admin extends Controller{
         // menyiapkan data post sesuai yang dipilih
         switch ($pages) {
             case 'sus':
-                $data['main'] = $this->model('Post_model')->postsIsSuspended(1);
+                $data['main'] = $this->model('Post_model')->postsIsSuspended(1, -1);
                 $data["nav"] = "sus";
                 $this->view('admin/posts-discover', $data);
                 return;
@@ -104,7 +104,7 @@ class Admin extends Controller{
         $data['user'] = $this->model('User_model')->findUser( $_SESSION["user"]);
         // search post
         if(isset($_POST["search"])){
-			$data["main"] = $this->model('Post_model')->searchPostsAll($_POST["search"]);
+			$data["main"] = $this->model('Post_model')->searchPostsAll($_POST["search"], -1);
             $data['search'] = $_POST["search"];
             $data["nav"] = "def";
             $this->view('admin/posts-discover', $data);
@@ -170,7 +170,7 @@ class Admin extends Controller{
         }
         switch ($_POST["navPosts"]){
             case 'sus':
-                $data['main'] = $this->model('Post_model')->postsIsSuspended(1);
+                $data['main'] = $this->model('Post_model')->postsIsSuspended(1, -1);
                 break;
 
             default:
@@ -256,7 +256,7 @@ class Admin extends Controller{
 
         switch ($_POST["navPosts"]){
             case 'sus':
-                $data['main'] = $this->model('Post_model')->postsIsSuspended(1);
+                $data['main'] = $this->model('Post_model')->postsIsSuspended(1, -1);
                 break;
 
             default:

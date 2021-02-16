@@ -1,0 +1,12 @@
+.chat-from{
+    background-color:#77cad3e2 !important;
+    color: white !important;
+}
+.p-chat, .p-user{
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+    width: 0;  
+    background: transparent;  
+}

@@ -12,7 +12,7 @@
         <div class="modal-body">
           <strong>Planty</strong> is a platform that facilitates plant communities to learn, share experiences, communicate between communities and others.
           <br><br>
-          <small>Version: v.1.1.1b /Beta Version </small>
+          <small>Version: v.2.0.1 /Bonsai Version </small>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
@@ -20,7 +20,32 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="static-report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Report</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Your report was sent successfully. Thank you!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <!-- Costum Modal -->
+  <style>
+    .modal-body strong span span{
+      font-weight: normal;
+    }
+  </style>
   <div class="modal fade" id="costum-modal" tabindex="-1" role="dialog" aria-labelledby="costumTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -31,15 +56,40 @@
           </button>
         </div>
         <div class="modal-body">
-          Are you sure to <strong><span id="costumMessage"> Costum</span></strong>  ?
+          Are you sure to <strong><span id="costumMessage"> Costum</span></strong>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" style="color: black !important">Close</button>
           <a id="costumLink" href="" class="btn text-white"></a>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="costum-report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Report <span id="costum-report-for"></span></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <span id="custom-report-des"></span>
+          <br><br>
+          <div class="input-group">
+            <textarea id = "custom-report-input" class="form-control" placeholder="Description box..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a id="costum-report-send" href="" class="btn btn-primary">Send</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <!-- modal single action -->
   <div class="modal fade" id="single-logout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -54,7 +104,7 @@
           Are you sure to logout as <strong><?= $data["user"]["name"];?></strong> ?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" style="color: black !important">Close</button>
           <a href="<?= BASEURL;?>/Auth/logout" class="btn btn-danger">Log out</a>
         </div>
       </div>
@@ -62,6 +112,30 @@
   </div>
 
   <!-- modal input -->
+  <div class="modal fade" id="input-report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Report</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Found a bug or problem? Let us know by sending a description of the problem below. Thank you!
+          <br><br>
+          <div class="input-group">
+            <textarea id = "report-des" class="form-control" placeholder="Description box..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="sendReport()">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="input-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -91,26 +165,9 @@
               <label for="gender">Gender</label>
               <select class="form-control" id="gender" name="gender">
                 <option <?= ($data["user"]["gender"] == "male")? "selected":"";?> value="male">Male</option>
-                <option <?= ($data["user"]["gender"] == "famale")? "selected":"";?> value="famale">Famale</option>
+                <option <?= ($data["user"]["gender"] == "famale")? "selected":"";?> value="famale">Female</option>
               </select>
               <div class="invalid-feedback"> Please enter your email! </div>
-            </div>
-            <!-- password input -->
-            <div class="form-row">
-              <div class="password-input form-group col-md-6">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" value="<?= $data["user"]["password"];?>" required />
-                <div class="invalid-feedback">
-                  Please enter your password!
-                </div>
-              </div>
-              <div class="confirm-password-input form-group col-md-6">
-                <label for="confirm-password">Confirm Password</label>
-                <input type="password" class="form-control" id="confirm-password" name="confirm-password"value="<?= $data["user"]["password"];?>" required />
-                <div class="invalid-feedback">
-                  Please enter your password again!
-                </div>
-              </div>
             </div>
             <!-- profile -->
             <div class="form-group">
@@ -121,6 +178,9 @@
             <div class="form-group">
               <label for="banner">Banner image</label>
               <input type="file" class="form-control-file" id="banner" name="banner-photo">
+            </div>
+            <div class="mt-5">
+              <a href="<?= BASEURL;?>/Auth/reset">Reset password.</a>
             </div>
         </div>
         <div class="modal-footer">
