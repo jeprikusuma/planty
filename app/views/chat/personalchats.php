@@ -4,7 +4,9 @@
                 <?php $chat = (array) $chat?>
                 <?php if($chat['from'] == $_SESSION['user']): ?>
                     <div class="d-flex justify-content-end my-2" >
-                    <div class="bg-primary rounded text-white text-right px-3 py-1 chat-from" style="max-width: 50%;" >
+                    <div class="d-flex align-items-end">
+                    </div>
+                    <div class="bg-primary rounded text-white text-left px-3 py-1 chat-from" style="max-width: 50%;" >
                         <?=$chat['value'] ?>
                     </div>
                     </div>

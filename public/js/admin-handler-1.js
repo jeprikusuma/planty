@@ -200,7 +200,7 @@ const trendingNav = (to) => {
 
 const reportNav = (to) => {
     onNavReport = to;
-    fetch(baseUrl + "report/show/" + to, { 
+    fetch(baseUrl + "Report/show/" + to, { 
         method: "POST", 
         headers: { "Content-Type": "application/json; charset=utf-8"},
         body: JSON.stringify({

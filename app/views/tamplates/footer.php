@@ -9,10 +9,10 @@
   </script>
   <script src="<?= BASEURL;?>/js/base.js"></script>
   <script src="<?= BASEURL;?>/js/app.js"></script>
-  <script src="<?= BASEURL;?>/js/media.js"></script>
+  <script src="<?= BASEURL;?>/js/media-handler.js"></script>
   <script src="<?= BASEURL;?>/js/modal-handler.js"></script>
-  <script src="<?= BASEURL;?>/js/user-handler-13.js"></script>
-  <script src="<?= BASEURL;?>/js/chat-handler-15.js"></script>
+  <script src="<?= BASEURL;?>/js/user-handler-14.js"></script>
+  <script src="<?= BASEURL;?>/js/chat-handler-17.js"></script>
   <script src="<?= BASEURL;?>/js/admin-handler-1.js"></script>
 </body>
 

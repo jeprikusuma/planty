@@ -1,4 +1,4 @@
-        <div class="input-group mb-2 mb-md-3 mb-lg-3 mt-4 mt-lg-0 mt-md-0 order-1    d-md-flex d-lg-flex">
+        <div class="input-group mb-2 mb-md-3 mb-lg-3 mt-4 mt-lg-0 mt-md-0 order-1 chat-area-input d-md-flex d-lg-flex">
           <!-- Search user -->
           <input type="text" class="form-control" placeholder="Whose user do you want to chat with?" aria-describedby="basic-addon2" id="searchChatUserInput">
           <div class="input-group-append">

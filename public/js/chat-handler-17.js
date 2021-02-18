@@ -1,3 +1,4 @@
+
 const getOnlineUsers = () => {
     fetch(baseUrl + "chat/getOnlineUsers", { 
         method: "POST", 
@@ -144,6 +145,7 @@ const sendPersonalChat = (id, user1, user2) => {
                 const chats = document.querySelector('.chats');
                 chats.scrollTo(0, chats.scrollHeight);
             }, 200)
+            
          });
     }
 }
@@ -158,6 +160,9 @@ const updateOnline = () => {
     })
 }
 
+let count = 0,
+    lastCount = 0,
+    waitLoad = true;
 const chatCount = () => {
     fetch(baseUrl + "chat/chatCount", { 
         method: "POST", 
@@ -169,6 +174,18 @@ const chatCount = () => {
     .then(response => response.text())
     .then(data => {
        const chatCountDiscover = document.querySelectorAll('.chatCountDiscover');
+       if(waitLoad){
+           count = data;
+           lastCount = data;
+           waitLoad = false;
+       }else{
+            count = data;
+            if(count > lastCount){
+                document.querySelector('#notif').play();
+                console.log('yes')
+            }
+            lastCount = data;
+       }
        if(chatCountDiscover != null){
             if(data == 0){
                 chatCountDiscover.forEach(el => {

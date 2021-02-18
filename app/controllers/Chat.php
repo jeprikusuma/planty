@@ -38,7 +38,7 @@ class Chat extends Controller{
 		}
 		
 		$data['usersOnline'] = $this->model('User_model')->onlineUsers($_SESSION['user']);
-		$this->view('chat/usersOnline', $data);	
+		$this->view('chat/usersonline', $data);	
 	}
 
 	public function searchUser(){

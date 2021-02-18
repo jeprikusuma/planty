@@ -11,7 +11,7 @@
                        <span > Click to select an image...</span>
                     </label>
                     <input type="text" name="content" class="form-control col-10" placeholder="What do you think?" autocomplete="off" id = "posting-status" >
-                    <input type="file" name="" id="inImg" class="d-none" >
+                    <input type="file" name="" id="inImg" class="d-none" onchange="selectImage(event)" >
                   </div>
                 </div>
                 <div class="mt-4 d-flex justify-content-end">

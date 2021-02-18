@@ -15,7 +15,7 @@
                     </div>
                     <div class="d-flex flex-column mt-2 ml-4">
                     <h5><?= $isUser1 ? $chat['user2'] : $chat['user1']?></h5>
-                    <p><?= $chat['lastChat']?></p>
+                    <p><?=  substr($chat['lastChat'], 0, 50);?></p>
                 </div>
                 </div>  
                 <hr>

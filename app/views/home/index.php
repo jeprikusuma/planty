@@ -1,6 +1,7 @@
   <!-- Header area -->
   <header class="overflow-hidden mb-lg-5 mb-md-5 header d-none d-md-block d-lg-block">
     <!-- banner area -->
+    <audio id="notif" src="<?= BASEURL;?>/sound/notif.mp3"></audio>
     <div class="banner-cover overflow-hidden d-flex align-items-center justify-content-center">
       <img src="<?= BASEURL;?>/img/users/banner/<?= $data["user"]["banner"];?>" class="banner" alt="">
     </div>

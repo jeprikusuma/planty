@@ -46,6 +46,9 @@ class Auth extends Controller{
     }
 
     public function register(){
+        if(Session::find()){
+            header('Location:'.BASEURL.'/Auth');
+        }       
         if(isset($_POST["register"])){
             // validasi data
             if(isset($_POST["name"]) && 
@@ -98,6 +101,9 @@ class Auth extends Controller{
     }
 
     public function login(){
+        if(Session::find()){
+            header('Location:'.BASEURL.'/Auth');
+        } 
         if(isset($_POST["login"])){
             // validasi data
             if( isset($_POST["email"]) && 
@@ -251,6 +257,7 @@ class Auth extends Controller{
 				<br>
 				<h2 style = "color: #0275d8;">Welcome to Plant Comunity</h2>
 				<p>Please click the verification button below to activate your account.</p>
+                <p>'.BASEURL.'/Auth/verify/'.$id.'/'.$code.'</p>
 				<br>
 				<a href="'.BASEURL.'/Auth/verify/'.$id.'/'.$code.'" style="
 						padding: .8rem 1rem;
