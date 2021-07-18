@@ -247,8 +247,8 @@ class Auth extends Controller{
 
 		$mail->IsHTML(true);
 		$mail->AddAddress($user["email"], $user["name"]);
-		$mail->SetFrom("jeprikusuma13@gmail.com", "Planty");
-		$mail->AddReplyTo("jeprikusuma13@gmail.com", "jepri");
+		$mail->SetFrom("", "Planty");
+		$mail->AddReplyTo("", "jepri");
 		$mail->Subject = "Planty: Verify Account";
 		$content = '
 		<html>
